@@ -49,7 +49,7 @@ const Login = () => {
     //   .catch((err) => {
     //     console.log(err.message);
     //   });
-    fetch("https://cryptonest-api.onrender.com//api/auth/login", {
+    fetch("https://cryptonest-api.onrender.com/api/auth/login", {
       method: "POST",
       body: JSON.stringify({
         // Add parameters here

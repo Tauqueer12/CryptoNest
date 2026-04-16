@@ -61,7 +61,7 @@ const Signup = () => {
     //   .catch((err) => {
     //     console.log(err.message);
     //   });
-    fetch("https://cryptonest-api.onrender.com//api/auth/signup", {
+    fetch("https://cryptonest-api.onrender.com/api/auth/signup", {
       method: "POST",
       body: JSON.stringify({
         // Add parameters here
