@@ -102,8 +102,6 @@ router.post("/signup", async (req, res, next) => {
             });
           }
 });
-
-  });
 });
 
 router.delete('/logout', auth, async(req, res, next) => {
