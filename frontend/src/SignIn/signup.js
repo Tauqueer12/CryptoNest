@@ -1,4 +1,3 @@
-
 import "./signup.css";
 import logo from "./logo.png";
 import React from "react";
@@ -62,7 +61,7 @@ const Signup = () => {
     //   .catch((err) => {
     //     console.log(err.message);
     //   });
-    fetch("https://crytotrade-app.onrender.com/api/auth/signup", {
+    fetch("https://cryptonest-api.onrender.com//api/auth/signup", {
       method: "POST",
       body: JSON.stringify({
         // Add parameters here
@@ -77,50 +76,40 @@ const Signup = () => {
         "Content-Type": "application/json",
       },
     })
-
       .then((response) => response.json())
       .then((data) => {
         console.log(data);
-        if(data.success){
-                  data = data.data;
-                  localStorage.setItem("token", data.token);
-                  window.localStorage.setItem(
-                    "userId",
-                    JSON.stringify(data.userId)
-                  );
-                  window.localStorage.setItem("email", data.email);
-                  window.localStorage.setItem("first_name", data.first_name);
-                  window.localStorage.setItem("last_name", data.last_name);
-                  toast.success("Signup Successfull");
-                  setTimeout(() => {
-                    window.location.href = "/dashboard";
-                  }
-                  , 2000);
-        }else{
+        if (data.success) {
+          data = data.data;
+          localStorage.setItem("token", data.token);
+          window.localStorage.setItem("userId", JSON.stringify(data.userId));
+          window.localStorage.setItem("email", data.email);
+          window.localStorage.setItem("first_name", data.first_name);
+          window.localStorage.setItem("last_name", data.last_name);
+          toast.success("Signup Successfull");
+          setTimeout(() => {
+            window.location.href = "/dashboard";
+          }, 2000);
+        } else {
           toast.error(data.data.message);
           console.log(data.data.message);
         }
         // window.location.href = "/dashboard";
         // Handle data
-      }
-      )
+      })
       .catch((err) => {
-        console.log(err.message)
-        ;
+        console.log(err.message);
         toast(err.message);
         setTimeout(() => {
           window.location.href = "/signup";
-        }
-        , 2000);
-      }
-      );
-
+        }, 2000);
+      });
   };
   return (
     <div className="Login_PAGE flex flex-row bg-[#2f2f2f] h-[100%]">
       {/* <ToastContainer /> */}
       {/* <div className="  companyname"> */}
-        {/* <div className="innerdiv">
+      {/* <div className="innerdiv">
           <h2>
             Need webdesign for your page? designspace will help you... text for
             trading app
@@ -129,7 +118,7 @@ const Signup = () => {
             <img src={logo} className="logo" alt="company name"></img>
           </div>
         </div> */}
-        <div className="a3d-model w-[50%]">
+      <div className="a3d-model w-[50%]">
         {/* rotate the 3d model */}
         <Canvas
           dpr={[1, 2]}
@@ -149,14 +138,10 @@ const Signup = () => {
             <Stage environment={null}>
               <Model scale={0.005} />
             </Stage>
-          
           </PresentationControls>
-          
         </Canvas>
-      {/* </div> */}
-
+        {/* </div> */}
       </div>
-
 
       <div className="form-container w-[50%] flex flex-col justify-center">
         <div className="form-body w-[80%] md:w-[80%] lg:w-[60%] md:m-auto m-[5%]">
@@ -164,169 +149,160 @@ const Signup = () => {
             <h1 className="text-5xl p-5 font-bold text-white">Sign Up</h1>
           </div>
 
-        <form action="https://crytotrade-app.onrender.com/api/auth/signup" method="POST" onSubmit={onSubmitHandler}>
-          <div className="form-input">
-            <input
+          <form
+            action="https://crytotrade-app.onrender.com/api/auth/signup"
+            method="POST"
+            onSubmit={onSubmitHandler}
+          >
+            <div className="form-input">
+              <input
                 placeholder="first name"
                 type="text"
-                
                 onChange={(e) => setfirstname(e.target.value)}
                 value={firstname}
                 name="first_name"
-
-              className="firstname m-5 "
-              required
-              style={{
-                width: "100%",
-                height: "50px",
-                borderRadius: "10px",
-                border: "none",
-                outline: "none",
-                paddingLeft: "20px",
-                fontSize: "20px",
-                color: "white",
-                backgroundColor: "#454343",
-              }}
-            />
-            <input
+                className="firstname m-5 "
+                required
+                style={{
+                  width: "100%",
+                  height: "50px",
+                  borderRadius: "10px",
+                  border: "none",
+                  outline: "none",
+                  paddingLeft: "20px",
+                  fontSize: "20px",
+                  color: "white",
+                  backgroundColor: "#454343",
+                }}
+              />
+              <input
                 placeholder="last name"
                 type="text"
-                
                 onChange={(e) => setlastname(e.target.value)}
                 value={lastname}
                 name="last_name"
-
-              className="lastname m-5 "
-              required
-              style={{
-                width: "100%",
-                height: "50px",
-                borderRadius: "10px",
-                border: "none",
-                outline: "none",
-                paddingLeft: "20px",
-                fontSize: "20px",
-                color: "white",
-                backgroundColor: "#454343",
-              }}
-            />
-            <input
+                className="lastname m-5 "
+                required
+                style={{
+                  width: "100%",
+                  height: "50px",
+                  borderRadius: "10px",
+                  border: "none",
+                  outline: "none",
+                  paddingLeft: "20px",
+                  fontSize: "20px",
+                  color: "white",
+                  backgroundColor: "#454343",
+                }}
+              />
+              <input
                 placeholder="email"
                 type="email"
-                
                 onChange={(e) => setemail(e.target.value)}
                 value={email}
                 name="email"
-
-              className="email m-5 "
-              required
-              style={{
-                width: "100%",
-                height: "50px",
-                borderRadius: "10px",
-                border: "none",
-                outline: "none",
-                paddingLeft: "20px",
-                fontSize: "20px",
-                color: "white",
-                backgroundColor: "#454343",
-              }}
-            />
-            <input
+                className="email m-5 "
+                required
+                style={{
+                  width: "100%",
+                  height: "50px",
+                  borderRadius: "10px",
+                  border: "none",
+                  outline: "none",
+                  paddingLeft: "20px",
+                  fontSize: "20px",
+                  color: "white",
+                  backgroundColor: "#454343",
+                }}
+              />
+              <input
                 placeholder="phone"
                 type="tel"
                 pattern="[0-9]{10}"
-
                 onChange={(e) => setphone(e.target.value)}
                 value={phone}
                 name="phone"
-
-              className="phone m-5 "
-              required
-              style={{
-                width: "100%",
-                height: "50px",
-                borderRadius: "10px",
-                border: "none",
-                outline: "none",
-                paddingLeft: "20px",
-                fontSize: "20px",
-                color: "white",
-                backgroundColor: "#454343",
-              }}
-            />
-            <input
+                className="phone m-5 "
+                required
+                style={{
+                  width: "100%",
+                  height: "50px",
+                  borderRadius: "10px",
+                  border: "none",
+                  outline: "none",
+                  paddingLeft: "20px",
+                  fontSize: "20px",
+                  color: "white",
+                  backgroundColor: "#454343",
+                }}
+              />
+              <input
                 placeholder="address"
                 type="text"
-
                 onChange={(e) => setaddress(e.target.value)}
                 value={address}
                 name="address"
-
-              className="address m-5 "
-              required
-              style={{
-                width: "100%",
-                height: "50px",
-                borderRadius: "10px",
-                border: "none",
-                outline: "none",
-                paddingLeft: "20px",
-                fontSize: "20px",
-                color: "white",
-                backgroundColor: "#454343",
-              }}
-            />
-            <input
+                className="address m-5 "
+                required
+                style={{
+                  width: "100%",
+                  height: "50px",
+                  borderRadius: "10px",
+                  border: "none",
+                  outline: "none",
+                  paddingLeft: "20px",
+                  fontSize: "20px",
+                  color: "white",
+                  backgroundColor: "#454343",
+                }}
+              />
+              <input
                 placeholder="password"
                 type="password"
-
                 onChange={(e) => setpassword(e.target.value)}
                 value={password}
                 name="password"
-
-              className="password m-5 "
-              required
-              style={{
-                width: "100%",
-                height: "50px",
-                borderRadius: "10px",
-                border: "none",
-                outline: "none",
-                paddingLeft: "20px",
-                fontSize: "20px",
-                color: "white",
-                backgroundColor: "#454343",
-              }}
-            />
-            
-          </div>
-          <div className="form-button">
-            <button
-            type="submit"
-              className="login-button m-5"
-              style={{
-                width: "100%",
-                height: "50px",
-                borderRadius: "10px",
-                border: "none",
-                outline: "none",
-                fontSize: "20px",
-                color: "white",
-                backgroundColor: "#0CB1CA",
-              }}
-            >
-              Sign up
-            </button>
-          </div>
-        </form>
-        <div style={{ textAlign: "center" ,color:"white"}}>
+                className="password m-5 "
+                required
+                style={{
+                  width: "100%",
+                  height: "50px",
+                  borderRadius: "10px",
+                  border: "none",
+                  outline: "none",
+                  paddingLeft: "20px",
+                  fontSize: "20px",
+                  color: "white",
+                  backgroundColor: "#454343",
+                }}
+              />
+            </div>
+            <div className="form-button">
+              <button
+                type="submit"
+                className="login-button m-5"
+                style={{
+                  width: "100%",
+                  height: "50px",
+                  borderRadius: "10px",
+                  border: "none",
+                  outline: "none",
+                  fontSize: "20px",
+                  color: "white",
+                  backgroundColor: "#0CB1CA",
+                }}
+              >
+                Sign up
+              </button>
+            </div>
+          </form>
+          <div style={{ textAlign: "center", color: "white" }}>
             already have an account{" "}
             <a href="/login">
-              <strong style={{color:"#0CB1CA"}}>login here</strong>
+              <strong style={{ color: "#0CB1CA" }}>login here</strong>
             </a>
           </div>
-      </div>
+        </div>
       </div>
     </div>
   );
