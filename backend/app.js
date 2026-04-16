@@ -30,7 +30,7 @@ mongoose
     });
   })
   .catch((err) => {
-    console.log("Error Occurred");
+    console.log("Error Occurred connecting to MongoDB:", err.message);
   });
 
 app.use(flash());
