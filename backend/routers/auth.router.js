@@ -78,11 +78,13 @@ router.post("/signup", async (req, res, next) => {
                           credits: 1000000,
                           stocks: [],
                         });
-            newUser.save().then((result) => {
-              console.log(result);
-            }).catch((err) => {
-              console.log(err);
-            });
+            try {
+              await newUser.save();
+              console.log("User saved successfully");
+            } catch (err) {
+              console.log("Error saving user:", err);
+              return res.status(500).json({ success: false, data: { message: "Error saving user to database" } });
+            }
             let token;
             try {
               token = jwt.sign(
@@ -101,18 +103,19 @@ router.post("/signup", async (req, res, next) => {
           }
 });
 
+  });
+});
 
-router.delete('/logout',auth,async(req,res,next)=>{
-  try{
-    req.user.tokens = req.user.tokens.filter((token)=>{
+router.delete('/logout', auth, async(req, res, next) => {
+  try {
+    req.user.tokens = req.user.tokens.filter((token) => {
       return token.token != req.token;
-    })
+    });
     await req.user.save();
     res.send('Logged out successfully');
-  }catch(e){
+  } catch(e) {
     res.status(500).send(e);
   }
-  });
 });
 
 export default router;
