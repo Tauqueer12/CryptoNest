@@ -56,7 +56,7 @@ const Coin = () => {
         }
         const userId = localStorage.getItem("userId");
         console.log(userId);
-        fetch("https://crytotrade-app.onrender.com/api/user/stock/add", {
+        fetch("https://cryptonest-api.onrender.com/api/user/stock/add", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",

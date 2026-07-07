@@ -59,7 +59,7 @@ const Coin_sell = () => {
         }
         const userId = localStorage.getItem("userId");
         console.log(userId);
-        fetch("https://crytotrade-app.onrender.com/api/user/stock/remove", {
+        fetch("https://cryptonest-api.onrender.com/api/user/stock/remove", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",

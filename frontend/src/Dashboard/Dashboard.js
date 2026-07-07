@@ -29,7 +29,7 @@ function RenderingArrayOfObjects(props) {
     console.log(userId);
     userId = userId.replace(/['"]+/g, "");
     console.log(userId);
-    fetch("https://crytotrade-app.onrender.com/api/user/portfolio", {
+    fetch("https://cryptonest-api.onrender.com/api/user/portfolio", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -117,7 +117,7 @@ function RenderingArrayOfLists(props) {
     console.log(userId);
     userId = userId.replace(/['"]+/g, "");
     console.log(userId);
-    fetch("https://crytotrade-app.onrender.com/api/user/portfolio", {
+    fetch("https://cryptonest-api.onrender.com/api/user/portfolio", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -174,7 +174,7 @@ function RenderingArrayOfLists(props) {
   const showdata = (datas) => {
     console.log("showdata");
     console.log(datas);
-    let listItems1 = datas.map((element) => { 
+    let listItems1 = datas.map((element) => {
       return (
         <Singletable
           key={element.sto}
@@ -205,7 +205,7 @@ const Dashboard = () => {
     document.querySelector(".light-btn").classList.toggle("active");
     document.querySelector(".dark-btn").classList.toggle("active");
   }
- 
+
 
   const getdata = () => {
     const token = localStorage.getItem("token");
@@ -213,7 +213,7 @@ const Dashboard = () => {
     console.log(userId);
     userId = userId.replace(/['"]+/g, "");
     console.log(userId);
-    fetch("https://crytotrade-app.onrender.com/api/user/portfolio", {
+    fetch("https://cryptonest-api.onrender.com/api/user/portfolio", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -240,13 +240,12 @@ const Dashboard = () => {
           axios
             .get(url)
             .then((resa) => {
-              res[i].imagesmall = resa.data.image.small;
-              res[i].current_market_price =
-                resa.data.market_data.current_price.inr;
-              dummy +=
-                res[i].quantity * resa.data.market_data.current_price.inr;
+              res[i].imagesmall = resa.data?.image?.small || "";
+              const currentPrice = resa.data?.market_data?.current_price?.inr || 0;
+              res[i].current_market_price = currentPrice;
+              dummy += (res[i].quantity || 0) * currentPrice;
               console.log(dummy);
-              settemp(Math.round(dummy));
+              settemp(Math.round(dummy) || 0);
             })
             .catch((error) => {
               console.log(error);
@@ -385,10 +384,10 @@ const Dashboard = () => {
                 <svg>
                   <circle cx="38" cy="38" r="36"></circle>
                 </svg>
-                {(((temp / (1000000 - balance)) * 100 - 100).toFixed(2) >= 0) ? "% Profits" : "%Loss"}
+                {(1000000 - balance === 0) ? "% Profits" : ((((temp / (1000000 - balance)) * 100 - 100).toFixed(2) >= 0) ? "% Profits" : "%Loss")}
                 <div className="number">
                   <p>
-                    {((temp / (1000000 - balance)) * 100 - 100).toFixed(2)}%
+                    {(1000000 - balance === 0) ? "0.00" : ((temp / (1000000 - balance)) * 100 - 100).toFixed(2)}%
                   </p>
                 </div>
               </div>

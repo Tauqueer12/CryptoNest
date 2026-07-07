@@ -18,7 +18,7 @@ import Messages from "./Messages/Messages";
 function App() {
   const [coins, setCoins] = useState([])
 
-  const url = 'https://api.coingecko.com/api/v3/coins/'
+  const url = 'https://api.coingecko.com/api/v3/coins/markets?vs_currency=inr'
 
   useEffect(() => {
     axios

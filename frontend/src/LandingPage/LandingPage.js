@@ -59,7 +59,7 @@ const LandingPage = () => {
             data-aos-easing="ease-in-out"
           >
             <h1 className="mb-5 sm:text-6xl text-5xl items-center Avenir xl:w-2/2 text-gray-900">
-              The World's Fastest Growing Cryto Web App
+              The World's Fastest Growing Crypto Web App
             </h1>
             <p className="mb-4 xl:w-3/4 text-gray-600 text-lg">
               Buy and sell 200+ cryptocurrencies with 20+ flat currencies using bank transfers or your credit/debit card.
@@ -94,7 +94,7 @@ const LandingPage = () => {
             ></img>
           </div>
         </div>
-        <section className="mx-auto" style={{display:'block'}}>
+        <section className="mx-auto" style={{ display: 'block' }}>
           <div className="px-5 mx-auto lg:px-24 ">
             <div className="flex flex-col w-full mb-4 text-left lg:text-center">
             </div>

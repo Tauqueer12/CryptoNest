@@ -6,8 +6,8 @@ import { OrbitControls } from "@react-three/drei";
 import { useGLTF, Stage, PresentationControls } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
 import { useState } from "react";
-import { toast } from "react-toastify";
-
+import { toast, ToastContainer } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 function Model(props) {
   const { scene } = useGLTF("/ethereum/scene.gltf");
 
@@ -61,31 +61,35 @@ const Login = () => {
         "Content-Type": "application/json",
       },
     })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log(data);
-        data = data.data;
-        localStorage.setItem("token", data.token);
-        window.localStorage.setItem("userId", JSON.stringify(data.userId));
-        window.localStorage.setItem("email", data.email);
-        window.localStorage.setItem("first_name", data.first_name);
-        window.localStorage.setItem("last_name", data.last_name);
-        toast.success("Login Successfull");
-        setTimeout(() => {
-          window.location.href = "/dashboard";
-        }, 2000);
-
-        // Handle data
+      .then(async (response) => {
+        const data = await response.json();
+        if (response.ok || data.success) {
+          console.log(data);
+          const userData = data.data;
+          localStorage.setItem("token", userData.token);
+          window.localStorage.setItem("userId", userData.userId);
+          window.localStorage.setItem("email", userData.email);
+          window.localStorage.setItem("first_name", userData.first_name);
+          window.localStorage.setItem("last_name", userData.last_name);
+          toast.success("Login Successful");
+          setTimeout(() => {
+            window.location.href = "/dashboard";
+          }, 2000);
+        } else {
+          toast.error(data.message || data.error || "Login Failed. Check credentials.");
+          console.log("Login error from server:", data);
+        }
       })
       .catch((err) => {
-        console.log(err.message);
-        toast.error("Something Went Wrong");
+        console.log("Fetch error:", err.message);
+        toast.error("Network error. Is the server running?");
       });
   };
 
   return (
     // <div className="flex flex-row bg-[#2f2f2f] h-[100%]">
     <div className="Login_PAGE flex flex-row bg-[#2f2f2f] h-[100%]">
+      <ToastContainer />
       <div className="a3d-model w-[50%]">
         {/* rotate the 3d model */}
         <Canvas
