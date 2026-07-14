@@ -14,7 +14,6 @@ import Single from "./singlediv";
 import { setConfig } from "dompurify";
 
 import { toast } from "react-toastify";
-import DataStats from "../DataStats/DataStats";
 import Singletable from "./singletable";
 import AChart from "../chart/chart";
 
@@ -398,7 +397,6 @@ const Dashboard = () => {
         </div>
         {/* <!----------- Data Stats-------------> */}
         <h2>Recent Coins</h2>
-        {/* <DataStats/> */}
         <RenderingArrayOfObjects />
         {/* <RenderingArrayOfObjects /> */}
 
