@@ -3,6 +3,7 @@ import User from '../models/user.js'
 import jwt from "jsonwebtoken";
 import auth from "../middlewere/auth.middle.js";
 import dotenv from "dotenv";
+import bcrypt from "bcrypt";
 const router = express.Router();
 dotenv.config();
 const SECRET_KEY = process.env.SECRET_KEY;
@@ -20,10 +21,18 @@ router.post("/login", async (req, res, next) => {
     const error = new Error("Error! Something went wrong.");
     return next(error);
   }
-  if (!existingUser || existingUser.password != password) {
+
+  if (!existingUser) {
     const error = Error("Wrong details please check at once");
     return next(error);
   }
+
+  const passwordMatches = await bcrypt.compare(password, existingUser.password);
+  if (!passwordMatches) {
+    const error = new Error("Wrong details please check at once");
+    return next(error);
+  }
+
   let token;
   try {
     //Creating jwt token
@@ -68,11 +77,13 @@ router.post("/signup", async (req, res, next) => {
         }
       });
     }else{
+      const hashedPassword = await bcrypt.hash(password, 10);
+
       const newUser = await User({
                           first_name,
                           last_name,
                           email,
-                          password,
+                          password: hashedPassword,
                           phone,
                           address,
                           credits: 1000000,
