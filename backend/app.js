@@ -48,4 +48,10 @@ app.use('/api/auth',authRouter);
 app.use('/api/user',userDataRouter);
 
 
-
+app.use((err, req, res, next) => {
+  console.error(err.message);
+  res.status(err.statusCode || 500).json({
+    success: false,
+    message: err.message || "Something went wrong"
+  });
+});

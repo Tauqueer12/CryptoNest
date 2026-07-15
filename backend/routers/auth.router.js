@@ -24,6 +24,7 @@ router.post("/login", async (req, res, next) => {
 
   if (!existingUser) {
     const error = Error("Wrong details please check at once");
+    error.statusCode = 401;
     return next(error);
   }
 
@@ -64,65 +65,71 @@ router.post("/login", async (req, res, next) => {
 router.post("/signup", async (req, res, next) => {
   const { first_name, last_name, email, password, phone, address } = req.body;
 
-  User.findOne({
-    email: email 
-  }).then(async (user) => {
+  try {
+    const user = await User.findOne({ email: email });
+
     if (user) {
-      console.log(user);
-      console.log('user already exists');
-      return res.status(400).json({
-        success: false,
-        data:{
-          message: "User already exists"
-        }
-      });
-    }else{
-      const hashedPassword = await bcrypt.hash(password, 10);
+      const error = new Error("User already exists");
+      error.statusCode = 409;
+      return next(error);
+    }
 
-      const newUser = await User({
-                          first_name,
-                          last_name,
-                          email,
-                          password: hashedPassword,
-                          phone,
-                          address,
-                          credits: 1000000,
-                          stocks: [],
-                        });
-            try {
-              await newUser.save();
-              console.log("User saved successfully");
-            } catch (err) {
-              console.log("Error saving user:", err);
-              return res.status(500).json({ success: false, data: { message: "Error saving user to database" } });
-            }
-            let token;
-            try {
-              token = jwt.sign(
-                { userId: newUser.id, email: newUser.email },
-                SECRET_KEY,
-                { expiresIn: "1h" }
-              );
-            } catch (err) {
-              const error = new Error("Error! Something went wrong. 2");
-              return next(error);
-            }
-            res.status(201).json({
-              success: true,
-              data: { userId: newUser.id, email: newUser.email, token: token,first_name: newUser.first_name, last_name: newUser.last_name }
-            });
-          }
-});
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    const newUser = new User({
+      first_name,
+      last_name,
+      email,
+      password: hashedPassword,
+      phone,
+      address,
+      credits: 1000000,
+      stocks: [],
+    });
+
+    try {
+      await newUser.save();
+    } catch (err) {
+      err.statusCode = 500;
+      return next(err);
+    }
+
+    let token;
+    try {
+      token = jwt.sign(
+        { userId: newUser.id, email: newUser.email },
+        SECRET_KEY,
+        { expiresIn: "1h" }
+      );
+    } catch (err) {
+      err.statusCode = 500;
+      return next(err);
+    }
+
+    res.status(201).json({
+      success: true,
+      data: {
+        userId: newUser.id,
+        email: newUser.email,
+        token: token,
+        first_name: newUser.first_name,
+        last_name: newUser.last_name,
+      },
+    });
+  } catch (err) {
+    err.statusCode = 500;
+    return next(err);
+  }
 });
 
-router.delete('/logout', auth, async(req, res, next) => {
+router.delete('/logout', auth, async (req, res, next) => {
   try {
     req.user.tokens = req.user.tokens.filter((token) => {
       return token.token != req.token;
     });
     await req.user.save();
     res.send('Logged out successfully');
-  } catch(e) {
+  } catch (e) {
     res.status(500).send(e);
   }
 });
