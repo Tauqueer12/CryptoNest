@@ -63,7 +63,7 @@ router.post("/login", async (req, res, next) => {
 
 // Handling post request
 router.post("/signup", async (req, res, next) => {
-  const { first_name, last_name, email, password, phone, address } = req.body;
+  const { first_name, last_name, email, password } = req.body;
 
   try {
     const user = await User.findOne({ email: email });
@@ -81,8 +81,6 @@ router.post("/signup", async (req, res, next) => {
       last_name,
       email,
       password: hashedPassword,
-      phone,
-      address,
       credits: 1000000,
       stocks: [],
     });

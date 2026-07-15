@@ -25,8 +25,6 @@ const Signup = () => {
   const [lastname, setlastname] = useState("");
   const [email, setemail] = useState("");
   const [password, setpassword] = useState("");
-  const [address, setaddress] = useState("");
-  const [phone, setphone] = useState("");
   // const [errorMessages, setErrorMessages] = useState({});
   // const [isSubmitted, setIsSubmitted] = useState(false);
   // Generate JSX code for error message
@@ -37,7 +35,6 @@ const Signup = () => {
   //   );
   const onSubmitHandler = (e) => {
     e.preventDefault();
-    console.log(phone);
     // Using Fetch API
     // axios.post("http://localhost:5000/api/auth/signup", {
     //   method: "POST",
@@ -70,8 +67,6 @@ const Signup = () => {
         last_name: lastname,
         email: email,
         password: password,
-        phone: phone,
-        address: address,
       }),
       headers: {
         "Content-Type": "application/json",
@@ -204,47 +199,6 @@ const Signup = () => {
                 value={email}
                 name="email"
                 className="email m-5 "
-                required
-                style={{
-                  width: "100%",
-                  height: "50px",
-                  borderRadius: "10px",
-                  border: "none",
-                  outline: "none",
-                  paddingLeft: "20px",
-                  fontSize: "20px",
-                  color: "white",
-                  backgroundColor: "#454343",
-                }}
-              />
-              <input
-                placeholder="phone"
-                type="tel"
-                pattern="[0-9]{10}"
-                onChange={(e) => setphone(e.target.value)}
-                value={phone}
-                name="phone"
-                className="phone m-5 "
-                required
-                style={{
-                  width: "100%",
-                  height: "50px",
-                  borderRadius: "10px",
-                  border: "none",
-                  outline: "none",
-                  paddingLeft: "20px",
-                  fontSize: "20px",
-                  color: "white",
-                  backgroundColor: "#454343",
-                }}
-              />
-              <input
-                placeholder="address"
-                type="text"
-                onChange={(e) => setaddress(e.target.value)}
-                value={address}
-                name="address"
-                className="address m-5 "
                 required
                 style={{
                   width: "100%",
