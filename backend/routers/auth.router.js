@@ -124,15 +124,8 @@ router.post("/signup", async (req, res, next) => {
 });
 
 router.delete('/logout', auth, async (req, res, next) => {
-  try {
-    req.user.tokens = req.user.tokens.filter((token) => {
-      return token.token != req.token;
-    });
-    await req.user.save();
-    res.send('Logged out successfully');
-  } catch (e) {
-    res.status(500).send(e);
-  }
+  console.log("User logged out ", req.user);
+  res.status(200).json({ success: true, message: "Logged out successfully" });
 });
 
 export default router;
