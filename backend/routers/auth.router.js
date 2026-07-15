@@ -31,6 +31,7 @@ router.post("/login", async (req, res, next) => {
   const passwordMatches = await bcrypt.compare(password, existingUser.password);
   if (!passwordMatches) {
     const error = new Error("Wrong details please check at once");
+    error.statusCode = 401;
     return next(error);
   }
 
@@ -47,16 +48,16 @@ router.post("/login", async (req, res, next) => {
     const error = new Error("Error! Something went wrong.");
     return next(error);
   }
-  var newUser = await User.findById(existingUser.id);
+
 
   res.status(200).json({
     success: true,
     data: {
-      userId: newUser.id,
-      email: newUser.email,
+      userId: existingUser.id,
+      email: existingUser.email,
       token: token,
-      first_name: newUser.first_name,
-      last_name: newUser.last_name,
+      first_name: existingUser.first_name,
+      last_name: existingUser.last_name,
     },
   });
 });
@@ -88,7 +89,11 @@ router.post("/signup", async (req, res, next) => {
     try {
       await newUser.save();
     } catch (err) {
-      err.statusCode = 500;
+      if (err.code === 11000) {
+        const error = new Error("User already exists");
+        error.statusCode = 409;
+        return next(error);
+      }
       return next(err);
     }
 
@@ -100,7 +105,6 @@ router.post("/signup", async (req, res, next) => {
         { expiresIn: "1h" }
       );
     } catch (err) {
-      err.statusCode = 500;
       return next(err);
     }
 
@@ -115,7 +119,6 @@ router.post("/signup", async (req, res, next) => {
       },
     });
   } catch (err) {
-    err.statusCode = 500;
     return next(err);
   }
 });
