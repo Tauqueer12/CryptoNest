@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 import jwt from "jsonwebtoken";
 import User from "../models/user.js";
 import dotenv from "dotenv";
-import auth from "../middlewere/auth.middle.js";
+import auth from "../middleware/auth.middle.js";
 const router = express.Router();
 dotenv.config();
 const SECRET_KEY = process.env.SECRET_KEY;
