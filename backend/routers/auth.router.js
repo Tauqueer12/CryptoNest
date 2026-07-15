@@ -4,6 +4,8 @@ import jwt from "jsonwebtoken";
 import auth from "../middlewere/auth.middle.js";
 import dotenv from "dotenv";
 import bcrypt from "bcrypt";
+import validate from "../middleware/validate.middle.js";
+import { loginSchema, signupSchema } from "../schema/auth.schema.js";
 const router = express.Router();
 dotenv.config();
 const SECRET_KEY = process.env.SECRET_KEY;
@@ -11,7 +13,7 @@ const SECRET_KEY = process.env.SECRET_KEY;
 
 
 // Handling post request
-router.post("/login", async (req, res, next) => {
+router.post("/login", validate(loginSchema), async (req, res, next) => {
   let { email, password } = req.body;
 
   let existingUser;
@@ -63,7 +65,7 @@ router.post("/login", async (req, res, next) => {
 });
 
 // Handling post request
-router.post("/signup", async (req, res, next) => {
+router.post("/signup", validate(signupSchema), async (req, res, next) => {
   const { first_name, last_name, email, password } = req.body;
 
   try {
