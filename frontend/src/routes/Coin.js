@@ -9,7 +9,7 @@ import GAChart from "../chart/graph";
 
 
 
-const coin_buy = () => {
+const CoinBuy = () => {
   const params = useParams();
   const [_loading,setLoading] = useState(true);
   const [coin, setCoin] = useState({});
@@ -283,4 +283,4 @@ const coin_buy = () => {
     );
 };
 
-export default coin_buy;
+export default CoinBuy;

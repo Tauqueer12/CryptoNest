@@ -4,13 +4,12 @@ import LandingPage from "./LandingPage/LandingPage";
 import Dashboard from "./Dashboard/Dashboard";
 import Login from "./SignIn/login";
 import Signup from "./SignIn/signup";
-// import Market from "./Market/Market";
-import coin_buy from "./routes/Coin";
+import CoinBuy from "./routes/Coin";
 import Coins from "./Market/Coins";
 import axios from "axios";
 import Aboutus from "./aboutus/aboutus";
 import React, { useState, useEffect } from 'react'
-import coin_sell from "./routes/Coin_sell";
+import CoinSell from "./routes/Coin_sell";
 import { ToastContainer } from "react-toastify";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -81,7 +80,7 @@ function App() {
             path="/dashboard/sell/:coinId"
             element={
               <>
-                <coin_sell />
+                <CoinSell />
               </>
             }
           />
@@ -95,13 +94,7 @@ function App() {
           />
 
           <Route path='/market' element={<Coins coins={coins} />} />
-          <Route path='/coin' element={<coin_buy />}>
-            <Route path=':coinId' element={<coin_buy />} />
-          </Route>
-          
-  {/* <Route path="/dashboard/sell/:id" component={<Coin_sell/>} /> */}
-
-
+          <Route path='/coin/:coinId' element={<CoinBuy />} />
         </Routes>
       </Router>
     </div>

@@ -7,7 +7,7 @@ import { toast } from "react-toastify";
 import "./Coin.css";
 
 
-const coin_sell = () => {
+const CoinSell = () => {
   const params = useParams();
   const location = useLocation();
   console.log(location.state);
@@ -253,4 +253,4 @@ const coin_sell = () => {
   );
 };
 
-export default coin_sell;
+export default CoinSell;
