@@ -5,7 +5,7 @@ import Dashboard from "./Dashboard/Dashboard";
 import Login from "./SignIn/login";
 import Signup from "./SignIn/signup";
 // import Market from "./Market/Market";
-import Coin from "./routes/Coin";
+import coin_buy from "./routes/Coin";
 import Coins from "./Market/Coins";
 import axios from "axios";
 import Aboutus from "./aboutus/aboutus";
@@ -95,8 +95,8 @@ function App() {
           />
 
           <Route path='/market' element={<Coins coins={coins} />} />
-          <Route path='/coin' element={<Coin />}>
-            <Route path=':coinId' element={<Coin />} />
+          <Route path='/coin' element={<coin_buy />}>
+            <Route path=':coinId' element={<coin_buy />} />
           </Route>
           
   {/* <Route path="/dashboard/sell/:id" component={<Coin_sell/>} /> */}

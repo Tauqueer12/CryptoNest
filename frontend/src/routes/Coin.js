@@ -6,16 +6,10 @@ import DOMPurify from "dompurify";
 import { toast } from "react-toastify";
 import "./Coin.css";
 import GAChart from "../chart/graph";
-// import axios from 'axios'
-// import { useParams } from 'react-router-dom'
-// import React, { useState, useEffect } from 'react'
-// import DOMPurify from 'dompurify'
-// import {toast} from 'react-toastify'
-// import './Coin.css'
-// import GAChart from '../chart/graph'
 
 
-const Coin = () => {
+
+const coin_buy = () => {
   const params = useParams();
   const [_loading,setLoading] = useState(true);
   const [coin, setCoin] = useState({});
@@ -289,4 +283,4 @@ const Coin = () => {
     );
 };
 
-export default Coin;
+export default coin_buy;
