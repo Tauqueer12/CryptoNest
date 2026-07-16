@@ -1,6 +1,4 @@
 import express from "express";
-import mongoose from "mongoose";
-import jwt from "jsonwebtoken";
 import User from "../models/user.js";
 import dotenv from "dotenv";
 import auth from "../middleware/auth.middle.js";
@@ -9,174 +7,214 @@ dotenv.config();
 const SECRET_KEY = process.env.SECRET_KEY;
 
 //Handling Get request
-router.post("/portfolio", async (req, res, next) => {
-  const { userId } = req.body;
-  // console.log(req);
-  // const userId = req.params.userId;
-  console.log(userId);
-  let userData = await User.findById(userId);
-  console.log(userData);
-  console.log(userData.stocks);
-  res.status(200).json({
-    success: true,
-    data: {
-      stocks: userData.stocks,
-      credits: userData.credits,
-    },
-  });
+router.post("/portfolio", auth, async (req, res, next) => {
+  try {
+    const userId = req.user._id;
+    const userData = await User.findById(userId);
+    if (!userData) {
+      const error = new Error("User not found");
+      error.statusCode = 404;
+      throw error;
+    }
+    res.status(200).json({
+      success: true,
+      data: { stocks: userData.stocks, credits: userData.credits },
+    });
+  } catch (error) {
+    next(error);
+  }
 });
 
 // Add a Stock To User's Portfolio
 router.post("/stock/add", auth, async (req, res, next) => {
-  console.log(SECRET_KEY);
-  var { userId, stockId, current_price, quantity } = req.body;
-  // console.log(userId);
-  //remove single quote from object id
-  userId = userId.replace(/['"]+/g, "");
-  console.log(userId);
-  current_price = parseFloat(current_price);
-  const myUser = await User.findById(userId);
-  if (myUser.credits - current_price < 0) {
-    res.status(400).json({
-      success: false,
-      data: {
-        message: "Insufficient Credits",
-      },
-    });
-    return;
-  }
-  console.log(myUser);
-  const user = await User.findOne({
-    _id: userId,
-    stocks: { $elemMatch: { stockId: stockId } },
-  });
 
-  if (user) {
-    // If the stock already exists, update the quantity
-    await User.updateOne(
-      {
-        _id: userId,
-        stocks: { $elemMatch: { stockId: stockId } },
-      },
+  try {
+    let userId = req.user._id;
+    let { stockId, trade_amount, quantity } = req.body;
+    if (!userId || !stockId) {
+      const error = new Error("userId and stockId are required");
+      error.statusCode = 400;
+      throw error;
+    }
+
+    userId = String(userId).replace(/['"]+/g, "");
+    console.log(userId);
+    trade_amount = parseFloat(trade_amount);
+    quantity = parseFloat(quantity);
+
+    if (!Number.isFinite(trade_amount) || trade_amount < 10) {
+      const error = new Error("trade_amount must be a number and at least 10");
+      error.statusCode = 400;
+      throw error;
+    }
+    if (!Number.isFinite(quantity) || quantity <= 0) {
+      const error = new Error("quantity must be a positive number");
+      error.statusCode = 400;
+      throw error;
+    }
+
+    const debitedUser = await User.findOneAndUpdate(
+      { _id: userId, credits: { $gte: trade_amount } },
+      { $inc: { credits: -trade_amount } },
+      { new: true }
+    );
+
+    if (!debitedUser) {
+      const error = new Error("Insufficient Credits");
+      error.statusCode = 400;
+      throw error;
+    }
+
+    // Try incrementing an existing holding first.
+    let updatedUser = await User.findOneAndUpdate(
+      { _id: userId, "stocks.stockId": stockId },
       {
         $inc: {
           "stocks.$.quantity": quantity,
-          credits: -current_price,
-          "stocks.$.total_amount": current_price,
-        },
-      }
-    );
-  } else {
-    // If the stock doesn't exist, add a new object
-    let userData = await User.findOneAndUpdate(
-      {
-        _id: userId,
-      },
-      {
-        $addToSet: {
-          stocks: {
-            stockId: stockId,
-            quantity: quantity,
-            total_amount: current_price,
-          },
-        },
-        $inc: {
-          credits: -current_price,
+          "stocks.$.total_amount": trade_amount,
         },
       },
-      {
-        new: true,
-      }
+      { new: true }
     );
-  }
-  const updatedUser = await User.findById({
-    _id: userId,
-  });
-  console.log(updatedUser);
-  res.status(200).json({
-    success: true,
-    data: {
-      stocks: updatedUser.stocks,
-      credits: updatedUser.credits,
-    },
-  });
-});
-router.post("/stock/remove", auth, async (req, res, next) => {
-  var { userId, stockId, current_price, quantity } = req.body;
-  userId = userId.replace(/['"]+/g, "");
-  console.log(userId);
-  const user = await User.findOne({
-    _id: userId,
-    stocks: { $elemMatch: { stockId: stockId } },
-  });
 
-  if (user) {
-    const stock = user.stocks.find((s) => s.stockId === stockId);
-    const newQuantity = stock.quantity - quantity;
-    const newTotalAmount = stock.total_amount - current_price;
-    console.log(newQuantity, newTotalAmount);
-    if (newQuantity > 0 && newTotalAmount > 5) {
-      await User.updateOne(
-        {
-          _id: userId,
-          stocks: { $elemMatch: { stockId: stockId } },
-        },
-        {
-          $set: {
-            "stocks.$.quantity": newQuantity,
-            "stocks.$.total_amount": newTotalAmount,
-          },
-          $inc: {
-            credits: current_price,
-          },
-        }
+    if (!updatedUser) {
+      // No existing holding — try adding a new one, but guard against
+      // a concurrent request having just added it between these two calls.
+      updatedUser = await User.findOneAndUpdate(
+        { _id: userId, "stocks.stockId": { $ne: stockId } },
+        { $push: { stocks: { stockId, quantity, total_amount: trade_amount } } },
+        { new: true }
       );
-    } else {
-      console.log("Removing stock", stockId);
-      await User.updateOne(
-        {
-          _id: userId,
-        },
-        {
-          $inc: {
-            credits: current_price,
-          },
-          $pull: {
-            stocks: {
-              stockId: stockId,
+
+      if (!updatedUser) {
+        // Lost the race — a concurrent buy added it first. Fall back to increment.
+        updatedUser = await User.findOneAndUpdate(
+          { _id: userId, "stocks.stockId": stockId },
+          {
+            $inc: {
+              "stocks.$.quantity": quantity,
+              "stocks.$.total_amount": trade_amount,
             },
           },
-        },
-        {
-          new: true,
-        }
-      );
+          { new: true }
+        );
+      }
     }
-    const updatedUser = await User.findById({
-      _id: userId,
-    });
     console.log(updatedUser);
     res.status(200).json({
       success: true,
       data: {
         stocks: updatedUser.stocks,
         credits: updatedUser.credits,
-        amount_left: newTotalAmount,
       },
     });
-    return;
-  } else {
-    res.status(404).json({ message: "User or stock not found." });
+  } catch (error) {
+    next(error);
   }
 });
 
-// // Buy a Stock
-// router.post('/buy/stocks', async (req, res, next) => {
-//   const {email, stockName, stockPrice, stockQuantity} = req.body;
-//   let existingUser;
-//   try {
+// Remove a Stock From User's Portfolio
+router.post("/stock/remove", auth, async (req, res, next) => {
+  try {
+    let userId = req.user._id;
+    let { stockId, trade_amount, quantity } = req.body;
+    if (!userId || !stockId) {
+      const error = new Error("userId and stockId are required");
+      error.statusCode = 400;
+      throw error;
+    }
 
-//   res.send("Stocks Bought");
-// }
+    userId = String(userId).replace(/['"]+/g, "");
+    trade_amount = parseFloat(trade_amount);
+    quantity = parseFloat(quantity);
+    console.log(userId);
+
+    if (!Number.isFinite(trade_amount) || trade_amount < 10) {
+      const error = new Error("trade_amount must be a number and at least 10");
+      error.statusCode = 400;
+      throw error;
+    }
+    if (!Number.isFinite(quantity) || quantity <= 0) {
+      const error = new Error("quantity must be a positive number");
+      error.statusCode = 400;
+      throw error;
+    }
+
+    const user = await User.findOne({
+      _id: userId,
+      stocks: { $elemMatch: { stockId: stockId } },
+    });
+
+    if (user) {
+      const stock = user.stocks.find((s) => s.stockId === stockId);
+      const projectedQuantity = stock.quantity - quantity;
+      const projectedTotal = stock.total_amount - trade_amount;
+      console.log(projectedQuantity, projectedTotal);
+
+      let updatedUser;
+      if (projectedQuantity > 0 && projectedTotal > 5) {
+        const result = await User.findOneAndUpdate(
+          {
+            _id: userId,
+            stocks: { $elemMatch: { stockId, quantity: { $gte: quantity } } },
+          },
+          {
+            $inc: {
+              "stocks.$.quantity": -quantity,
+              "stocks.$.total_amount": -trade_amount,
+              credits: trade_amount,
+            },
+          },
+          { new: true }
+        );
+
+        if (!result) {
+          const error = new Error("Stock holding changed, please try again");
+          error.statusCode = 409;
+          throw error;
+        }
+        updatedUser = result;
+      } else {
+        const result = await User.findOneAndUpdate(
+          {
+            _id: userId,
+            stocks: { $elemMatch: { stockId, quantity: { $gte: quantity } } },
+          },
+          {
+            $inc: { credits: trade_amount },
+            $pull: { stocks: { stockId } },
+          },
+          { new: true }
+        );
+
+        if (!result) {
+          const error = new Error("Stock holding changed, please try again");
+          error.statusCode = 409;
+          throw error;
+        }
+        updatedUser = result;
+      }
+
+      console.log(updatedUser);
+
+      res.status(200).json({
+        success: true,
+        data: {
+          stocks: updatedUser.stocks,
+          credits: updatedUser.credits,
+          amount_left: projectedTotal,
+        },
+      });
+      return;
+    } else {
+      const error = new Error("User or stock not found");
+      error.statusCode = 404;
+      throw error;
+    }
+  } catch (error) {
+    next(error);
+  }
+});
+
 
 export default router;

@@ -53,7 +53,7 @@ const CoinBuy = () => {
         userId: userId,
         stockId: coin.id,
         quantity: value / coin.market_data?.current_price.inr,
-        current_price: value,
+        trade_amount: value,
       })
     }).then((response) => response.json())
       .then((response) => {
