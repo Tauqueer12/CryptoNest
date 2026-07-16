@@ -1,6 +1,6 @@
 import React from 'react'
 import CoinItem from './CoinItem'
-import CoinBuy from '../routes/Coin'
+import CoinBuy from '../routes/Coin_buy'
 import { Link } from 'react-router-dom'
 import Navbar from '../Navbar/Navbar'
 import './Coins.css'

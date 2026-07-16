@@ -4,7 +4,7 @@ import LandingPage from "./LandingPage/LandingPage";
 import Dashboard from "./Dashboard/Dashboard";
 import Login from "./SignIn/login";
 import Signup from "./SignIn/signup";
-import CoinBuy from "./routes/Coin";
+import CoinBuy from "./routes/Coin_buy";
 import Coins from "./Market/Coins";
 import axios from "axios";
 import Aboutus from "./aboutus/aboutus";
