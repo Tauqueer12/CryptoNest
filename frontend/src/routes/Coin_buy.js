@@ -10,7 +10,7 @@ import GAChart from "../chart/graph";
 
 const CoinBuy = () => {
   const params = useParams();
-  const [_loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(true);
   const [coin, setCoin] = useState({});
   const [value, setValue] = useState();
   useEffect(() => {
