@@ -113,8 +113,7 @@ const CoinSell = () => {
 
           {message === 1 ? (
             <p className="text-red-500">
-              You Have Only {coin.name}s of value{" "}
-              {Math.round((avl + Number.EPSILON) * 100) / 100} to sell
+              This may be based on outdated data — you can still try to sell.
             </p>
           ) : null}
           {message === 2 ? (
