@@ -163,7 +163,7 @@ const Login = () => {
           </form>
 
           <div style={{ textAlign: "center", color: "white" }}>
-            dont have an account{" "}
+            Don't have an account ?{" "}
             <a href="/signup">
               <strong style={{ color: "#0CB1CA" }}>Sign up here</strong>
             </a>

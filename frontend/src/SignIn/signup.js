@@ -213,9 +213,9 @@ const Signup = () => {
             </div>
           </form>
           <div style={{ textAlign: "center", color: "white" }}>
-            already have an account{" "}
+            Already have an account ?{" "}
             <a href="/login">
-              <strong style={{ color: "#0CB1CA" }}>login here</strong>
+              <strong style={{ color: "#0CB1CA" }}>Login here</strong>
             </a>
           </div>
         </div>
