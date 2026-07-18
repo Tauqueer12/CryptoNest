@@ -7,10 +7,7 @@ import Navbar from "../Navbar/Navbar";
 
 const { Meta } = Card;
 
-// npx create-react-app appname
-// npm i antd
-// npm i axios
-// b6e122bd0949cec51cc51a7be64de685b821347f
+
 
 function Messages() {
   const [news, setNews] = useState([]);

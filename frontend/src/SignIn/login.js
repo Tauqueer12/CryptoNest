@@ -25,30 +25,7 @@ const Login = () => {
   const onSubmitHandler = (e) => {
     e.preventDefault();
 
-    // Using Fetch API
-    // axios.post("http://localhost:5000/api/auth/signup", {
-    //   method: "POST",
-    //   body: JSON.stringify({
-    //     // Add parameters here
-    //     firstname,
-    //     lastname,
-    //     email,
-    //     password,
-    //     phone,
-    //     address,
-    //   }),
-    //   headers: {
-    //     'Content-Type': 'application/json'
-    //   },
-    // })
-    //   .then((response) => response.json())
-    //   .then((data) => {
-    //     console.log(data);
-    //     // Handle data
-    //   })
-    //   .catch((err) => {
-    //     console.log(err.message);
-    //   });
+
     fetch("https://cryptonest-api.onrender.com/api/auth/login", {
       method: "POST",
       body: JSON.stringify({
@@ -87,7 +64,7 @@ const Login = () => {
   };
 
   return (
-    // <div className="flex flex-row bg-[#2f2f2f] h-[100%]">
+
     <div className="Login_PAGE flex flex-row bg-[#2f2f2f] h-[100%]">
       <ToastContainer />
       <div className="a3d-model w-[50%]">

@@ -25,40 +25,10 @@ const Signup = () => {
   const [lastname, setlastname] = useState("");
   const [email, setemail] = useState("");
   const [password, setpassword] = useState("");
-  // const [errorMessages, setErrorMessages] = useState({});
-  // const [isSubmitted, setIsSubmitted] = useState(false);
-  // Generate JSX code for error message
 
-  // const renderErrorMessage = (name) =>
-  //   name === errorMessages.name && (
-  //     <div className="error">{errorMessages.message}</div>
-  //   );
   const onSubmitHandler = (e) => {
     e.preventDefault();
-    // Using Fetch API
-    // axios.post("http://localhost:5000/api/auth/signup", {
-    //   method: "POST",
-    //   body: JSON.stringify({
-    //     // Add parameters here
-    //     firstname,
-    //     lastname,
-    //     email,
-    //     password,
-    //     phone,
-    //     address,
-    //   }),
-    //   headers: {
-    //     'Content-Type': 'application/json'
-    //   },
-    // })
-    //   .then((response) => response.json())
-    //   .then((data) => {
-    //     console.log(data);
-    //     // Handle data
-    //   })
-    //   .catch((err) => {
-    //     console.log(err.message);
-    //   });
+
     fetch("https://cryptonest-api.onrender.com/api/auth/signup", {
       method: "POST",
       body: JSON.stringify({
@@ -91,8 +61,7 @@ const Signup = () => {
           toast.error(errorMessage);
           console.log(errorMessage);
         }
-        // window.location.href = "/dashboard";
-        // Handle data
+
       })
       .catch((err) => {
         console.log(err.message);
@@ -105,16 +74,7 @@ const Signup = () => {
   return (
     <div className="Login_PAGE flex flex-row bg-[#2f2f2f] h-[100%]">
       <ToastContainer />
-      {/* <div className="  companyname"> */}
-      {/* <div className="innerdiv">
-          <h2>
-            Need webdesign for your page? designspace will help you... text for
-            trading app
-          </h2>
-          <div style={{ textAlign: "center" }}>
-            <img src={logo} className="logo" alt="company name"></img>
-          </div>
-        </div> */}
+
       <div className="a3d-model w-[50%]">
         {/* rotate the 3d model */}
         <Canvas
@@ -137,7 +97,7 @@ const Signup = () => {
             </Stage>
           </PresentationControls>
         </Canvas>
-        {/* </div> */}
+
       </div>
 
       <div className="form-container w-[50%] flex flex-col justify-center">

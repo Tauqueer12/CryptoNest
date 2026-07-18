@@ -1,33 +1,15 @@
-// import React from 'react';
-// import './LandingPage.css';
-// import Lnavbar from './lnavbar';
-// import Lbanner from './lbanner';
-// import Whyus from './whyus';
-// import Footer from './footer';
-// const LandingPage = () => {
-//   return (
-//     <div>
-//     <Lnavbar/>
-//     <Lbanner/>
-//     <Whyus/>
-//     <Footer/>
-//     </div>
-//   );
-// };
 
-// export default LandingPage;
 import React from 'react';
 
-// import GAChart from '../chart/graph';
 
 import Aboutrem from '../aboutus/about-rem';
 import Footer from './footer';
 import phone1 from './images/phone.png'
 import Shopify from './images/Shopify-Logo.svg'
-// import image1 from './images/image1.png'
+
 import PayPal from './images/PayPal-Logo.png'
 import Oracle from './images/oracle.png'
-// import Lnavbar from './lnavbar';
+
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 AOS.init();
@@ -36,15 +18,7 @@ const LandingPage = () => {
   return (
     <>
 
-      {/* <GAChart/> */}
-      {/* <div className="fixed flex-col justify-center h-[100%] w-[100%] bg-[#ffffff]">
-        <div className="endsignupButton flex flex-row justify-between mx-[12%] my-8">
-          <div className="heading">
-            <div className="text-[#000000] text-[4rem] font-bold m-0">
-              Crypto
-              <span className="text-[#ff0000]">Trade</span> */}
 
-      {/* <Lnavbar /> */}
       <section className="text-gray-600 body-font"
         style={{ background: "#fff" }}
       >
@@ -114,7 +88,7 @@ const LandingPage = () => {
               <div className="flex items-center justify-center"
                 data-aos="fade-up"
                 data-aos-anchor-placement="top-center"
-                // data-aos-offset="300"
+
                 data-aos-delay="50"
                 data-aos-easing="ease-in-out"
                 data-aos-duration="800"
@@ -128,7 +102,7 @@ const LandingPage = () => {
               <div className="flex items-center justify-center"
                 data-aos="fade-up"
                 data-aos-anchor-placement="top-center"
-                // data-aos-offset="300"
+
                 data-aos-delay="50"
                 data-aos-easing="ease-in-out"
                 data-aos-duration="1000">
@@ -141,7 +115,7 @@ const LandingPage = () => {
               <div className="flex items-center justify-center"
                 data-aos="fade-up"
                 data-aos-anchor-placement="top-center"
-                // data-aos-offset="300"
+
                 data-aos-delay="100"
                 data-aos-easing="ease-in-out"
                 data-aos-duration="1500">

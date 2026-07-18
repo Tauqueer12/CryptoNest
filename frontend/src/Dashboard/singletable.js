@@ -9,7 +9,7 @@ function Singletable(props) {
         <tbody style={{width:"100vw"}}>
               <tr >
                 <td>{props.stockId}</td>
-                {/* <td>{Math.round(Math.random()*10000+1)}</td> */}
+
                 <td>{Math.round(props.total_amount)}</td>
                 <td className="war" style={{color:"green"}}>Completed</td>
                 <td className="primary">Details</td>

@@ -14,7 +14,7 @@ const Mnavbar = () => {
   }
   return (
     <>
-      {/* <div className="nav-wrapper">  */}
+
 
       <nav>
         <input className="hidden" type="checkbox" id="menuToggle" />
@@ -24,14 +24,12 @@ const Mnavbar = () => {
             <BiMenu />
           </div>
 
-          {/* <div className="menu 2menu"> <BiMenu /></div> */}
+
 
         </label>
         <div className="nav-container123">
           <ul className="nav-tabs">
-            {/* <Link to="/">
-              <li className="nav-tab"><a href="/">Home </a></li>
-            </Link> */}
+
             <Link to="/dashboard">
               <li className="nav-tab"><a href="/dashboard">DashBoard</a></li>
             </Link>
@@ -43,7 +41,7 @@ const Mnavbar = () => {
             </Link>
 
 
-            {/* <li className="nav-tab"><a href="/#why-us">Why </a></li> */}
+
 
 
             <li className="nav-tab">
@@ -51,11 +49,11 @@ const Mnavbar = () => {
                 <a >logout</a>
               </button>
             </li>
-            {/* <li className="nav-tab"><button className="navbutton navsign"><a href="/signup">sign up</a></button></li> */}
+
           </ul>
         </div>
       </nav>
-      {/* </div> */}
+
     </>
   );
 };

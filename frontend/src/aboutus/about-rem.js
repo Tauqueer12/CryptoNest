@@ -14,7 +14,7 @@ const Aboutrem = () => {
       <div className='about-content'
         data-aos="zoom-out"
         data-aos-anchor-placement="top-center"
-        // data-aos-offset="300"
+
         data-aos-delay="50"
         data-aos-easing="ease-in-out"
         data-aos-duration="1000">
@@ -26,7 +26,7 @@ const Aboutrem = () => {
         <div className="carderabout"
           data-aos="fade-up"
           data-aos-anchor-placement="top-center"
-          // data-aos-offset="300"
+  
           data-aos-delay="50"
           data-aos-easing="ease-in-out"
           data-aos-duration="1000">
@@ -42,7 +42,7 @@ const Aboutrem = () => {
         <div className="carderabout"
           data-aos="fade-down"
           data-aos-anchor-placement="top-center"
-          // data-aos-offset="300"
+  
           data-aos-delay="50"
           data-aos-easing="ease-in-out"
           data-aos-duration="1000">
@@ -65,7 +65,7 @@ const Aboutrem = () => {
         <div className="carderabout"
           data-aos="flip-left"
           data-aos-anchor-placement="top-center"
-          // data-aos-offset="300"
+  
           data-aos-delay="50"
           data-aos-easing="ease-in"
           data-aos-duration="600">
@@ -78,7 +78,7 @@ const Aboutrem = () => {
           <div className="card__copyabout"
             data-aos="fade-up"
             data-aos-anchor-placement="top-center"
-            // data-aos-offset="300"
+    
             data-aos-delay="50"
             data-aos-easing="ease-in-out"
             data-aos-duration="800"
@@ -96,7 +96,7 @@ const Aboutrem = () => {
         <div className="carderabout"
           data-aos="fade-down"
           data-aos-anchor-placement="top-center"
-          // data-aos-offset="300"
+  
           data-aos-delay="50"
           data-aos-easing="ease-in-out"
           data-aos-duration="800"
@@ -110,7 +110,7 @@ const Aboutrem = () => {
         <div className="carderabout"
           data-aos="flip-right"
           data-aos-anchor-placement="top-center"
-          // data-aos-offset="300"
+  
           data-aos-delay="50"
           data-aos-easing="ease-in"
           data-aos-duration="600">
@@ -122,7 +122,7 @@ const Aboutrem = () => {
       <div style={{ textAlign: 'center' }}
       data-aos="fade"
           data-aos-anchor-placement="top-center"
-          // data-aos-offset="300"
+  
           data-aos-delay="50"
           data-aos-easing="ease-in-out"
           data-aos-duration="800">

@@ -32,10 +32,7 @@ const Navbar = () => {
 
 
                 <div className="sidebar">
-                    {/* <a href="/">
-                        <span className="material-icons-sharp">grid_view</span>
-                        <h3>Home</h3>
-                    </a> */}
+
                     <a href="/dashboard" >
                         <span className="material-icons-sharp">person_outline</span>
                         <h3>Dashboard</h3>
@@ -49,18 +46,7 @@ const Navbar = () => {
                         <h3>News Info</h3>
                         <span className="message-count">26</span>
                     </a>
-                    {/* <a href="/">
-                        <span className="material-icons-sharp">inventory</span>
-                        <h3>Wallet</h3>
-                    </a> */}
-                    {/* <a href="/">
-                        <span className="material-icons-sharp">settings</span>
-                        <h3>Settings</h3>
-                    </a> */}
-                    {/* <a href="/">
-                        <span className="material-icons-sharp">add</span>
-                        <h3>Add Products</h3>
-                    </a> */}
+
                     <a onClick={logOut}>
                         <span className="material-icons-sharp">logout</span>
                         <h3>logout</h3>
