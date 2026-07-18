@@ -1,182 +1,95 @@
 import React, { useEffect, useState } from "react";
 import "./Dashboard.css";
-// import logo from '../assets/logo.png'
 
 import profile1 from "../assets/profile-1.jpg";
 import profile2 from "../assets/profile-2.jpg";
 import profile3 from "../assets/profile-3.jpg";
 import profile4 from "../assets/profile-4.jpg";
 import Navbar from "../Navbar/Navbar";
-import { redirect } from "react-router-dom";
 
 import axios from "axios";
 import Single from "./singlediv";
-import { setConfig } from "dompurify";
-
 import { toast } from "react-toastify";
 import Singletable from "./singletable";
 import AChart from "../chart/chart";
 
-function RenderingArrayOfObjects(props) {
-  const [currentcoins, setcurrentcoins] = useState([]);
-  const [listItems, setlistItems] = useState([]);
+function usePortfolio() {
+  const [coins, setCoins] = useState([]);
+  const [balance, setBalance] = useState(0);
+  const [loading, setLoading] = useState(true);
 
-
-  const getdata = () => {
-    const token = localStorage.getItem("token");
-    var userId = localStorage.getItem("userId");
-    console.log(userId);
-    userId = userId.replace(/['"]+/g, "");
-    console.log(userId);
-    fetch("https://cryptonest-api.onrender.com/api/user/portfolio", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: "Bearer " + token,
-      },
-      body: JSON.stringify({
-        userId: userId,
-      }),
-    })
-      .then((res) => {
-        return res.json();
-      })
-      .then((res) => {
-        // console.log(res);
-        let newarr = [];
-        // console.log("hi");
-        // setbalance(Math.round(res.data.credits))
-        res = res.data.stocks;
-        for (let i = 0; i < res.length; i++) {
-          const url = `https://api.coingecko.com/api/v3/coins/${res[i].stockId}`;
-
-          axios
-            .get(url)
-            .then((resa) => {
-              res[i].imagesmall = resa.data.image.small;
-              res[i].current_market_price =
-                resa.data.market_data.current_price.inr;
-            })
-            .catch((error) => {
-              console.log(error);
-            });
-        }
-        // console.log(res);
-        return res;
-      })
-      .then((res) => {
-        // showdata(res)
-        setcurrentcoins(res);
-      })
-      .then(() => {
-        return showdata(currentcoins);
-      })
-      .then((lists) => {
-        setlistItems(lists);
-      })
-      .catch((err) => {
-        console.log(err);
-        toast.error("Something went wrong");
-      });
-  };
-  //   getdata();
   useEffect(() => {
-    getdata();
-  }, [currentcoins]);
+    let cancelled = false;
 
-  // const data = {currentcoins};
-  // console.log(data);
-  // let listItems=[];
-  const showdata = (datas) => {
-    let listItems1 = datas.map((element) => {
-      return (
-        <Single
-          key={element.sto}
-          stockId={element.stockId}
-          imagesmall={element.imagesmall}
-          total_amount={element.total_amount}
-          quantity={element.quantity}
-          current_market_price={element.current_market_price}
-          current_cost={element.quantity * element.current_market_price}
-        />
-      );
-    });
-    return listItems1;
-  };
+    async function fetchPortfolio() {
+      try {
+        const token = localStorage.getItem("token");
+        let userId = localStorage.getItem("userId");
+        userId = userId.replace(/['"]+/g, "");
 
-  return <div>{listItems}</div>;
-}
-function RenderingArrayOfLists(props) {
-  const [currentcoins, setcurrentcoins] = useState([]);
-  const [listItems, setlistItems] = useState([]);
+        const res = await fetch(
+          "https://cryptonest-api.onrender.com/api/user/portfolio",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: "Bearer " + token,
+            },
+            body: JSON.stringify({ userId: userId }),
+          }
+        );
+        const json = await res.json();
+        const stocks = json.data.stocks;
 
-  const getdata = () => {
-    const token = localStorage.getItem("token");
-    var userId = localStorage.getItem("userId");
-    console.log(userId);
-    userId = userId.replace(/['"]+/g, "");
-    console.log(userId);
-    fetch("https://cryptonest-api.onrender.com/api/user/portfolio", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: "Bearer " + token,
-      },
-      body: JSON.stringify({
-        userId: userId,
-      }),
-    })
-      .then((res) => {
-        return res.json();
-      })
-      .then((res) => {
-        console.log(res);
-        let newarr = [];
-        res = res.data.stocks;
-        for (let i = 0; i < res.length; i++) {
-          const url = `https://api.coingecko.com/api/v3/coins/${res[i].stockId}`;
+        let enriched = stocks;
 
-          axios
-            .get(url)
-            .then((resa) => {
-              res[i].imagesmall = resa.data.image.small;
-              res[i].current_market_price =
-                resa.data.market_data.current_price.inr;
-            })
-            .catch((error) => {
-              console.log(error);
-            });
+        if (stocks.length > 0) {
+          const ids = stocks.map((s) => s.stockId).join(",");
+          const { data: marketData } = await axios.get(
+            `https://api.coingecko.com/api/v3/coins/markets?vs_currency=inr&ids=${ids}`
+          );
+
+          const marketMap = new Map(marketData.map((m) => [m.id, m]));
+
+          enriched = stocks.map((stock) => {
+            const market = marketMap.get(stock.stockId);
+            return {
+              ...stock,
+              imagesmall: market?.image?.replace('/large/', '/small/') || "",
+              current_market_price: market?.current_price || 0,
+            };
+          });
         }
-        console.log(res);
-        return res;
-      })
-      .then((res) => {
-        // showdata(res)
-        setcurrentcoins(res);
-      })
-      .then(() => {
-        return showdata(currentcoins);
-      })
-      .then((lists) => {
-        setlistItems(lists);
-      })
-      .catch((err) => {
-        console.log(err);
-        toast.error("Something went wrong");
-      });
-  };
-  //   getdata();
-  useEffect(() => {
-    getdata();
+
+        if (!cancelled) {
+          setCoins(enriched);
+          setBalance(Math.round(json.data.credits));
+          setLoading(false);
+        }
+      } catch (err) {
+        if (!cancelled) {
+          console.log(err);
+          toast.error("Something went wrong");
+          setLoading(false);
+        }
+      }
+    }
+
+    fetchPortfolio();
+    return () => {
+      cancelled = true;
+    };
   }, []);
 
-  const showdata = (datas) => {
-    console.log("showdata");
-    console.log(datas);
-    let listItems1 = datas.map((element) => {
-      return (
-        <Singletable
-          key={element.sto}
+  return { coins, balance, loading };
+}
+
+function RenderingArrayOfObjects({ coins }) {
+  return (
+    <div>
+      {coins.map((element) => (
+        <Single
+          key={element.stockId}
           stockId={element.stockId}
           imagesmall={element.imagesmall}
           total_amount={element.total_amount}
@@ -184,116 +97,47 @@ function RenderingArrayOfLists(props) {
           current_market_price={element.current_market_price}
           current_cost={element.quantity * element.current_market_price}
         />
-      );
-    });
-    return listItems1;
-  };
+      ))}
+    </div>
+  );
+}
 
-  return <>{listItems}</>;
+function RenderingArrayOfLists({ coins }) {
+  return (
+    <>
+      {coins.map((element) => (
+        <Singletable
+          key={element.stockId}
+          stockId={element.stockId}
+          imagesmall={element.imagesmall}
+          total_amount={element.total_amount}
+          quantity={element.quantity}
+          current_market_price={element.current_market_price}
+          current_cost={element.quantity * element.current_market_price}
+        />
+      ))}
+    </>
+  );
 }
 
 const Dashboard = () => {
   const [name, setName] = React.useState("Admin");
+  const { coins, balance, loading } = usePortfolio();
 
-  const [balance, setbalance] = useState(0);
-  const [investment, setinvestment] = useState(0);
-  const [temp, settemp] = useState(0);
-  // change theme
+  const investment = coins.reduce(
+    (sum, c) => sum + (c.quantity || 0) * (c.current_market_price || 0),
+    0
+  );
+
   function changeColor() {
     document.body.classList.toggle("dark-theme-variables");
     document.querySelector(".light-btn").classList.toggle("active");
     document.querySelector(".dark-btn").classList.toggle("active");
   }
 
-
-  const getdata = () => {
-    const token = localStorage.getItem("token");
-    var userId = localStorage.getItem("userId");
-    console.log(userId);
-    userId = userId.replace(/['"]+/g, "");
-    console.log(userId);
-    fetch("https://cryptonest-api.onrender.com/api/user/portfolio", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: "Bearer " + token,
-      },
-      body: JSON.stringify({
-        userId: userId,
-      }),
-    })
-      .then((res) => {
-        return res.json();
-      })
-      .then((res) => {
-        console.log(res);
-        let newarr = [];
-        console.log("hi");
-        setbalance(Math.round(res.data.credits));
-
-        res = res.data.stocks;
-        let dummy = 0;
-        for (let i = 0; i < res.length; i++) {
-          const url = `https://api.coingecko.com/api/v3/coins/${res[i].stockId}`;
-
-          axios
-            .get(url)
-            .then((resa) => {
-              res[i].imagesmall = resa.data?.image?.small || "";
-              const currentPrice = resa.data?.market_data?.current_price?.inr || 0;
-              res[i].current_market_price = currentPrice;
-              dummy += (res[i].quantity || 0) * currentPrice;
-              console.log(dummy);
-              settemp(Math.round(dummy) || 0);
-            })
-            .catch((error) => {
-              console.log(error);
-            });
-
-          // console.log(res[i].quantity);
-        }
-        // setinvestment(Math.round(temp));
-        console.log(dummy);
-        // setinvestment(temp)
-        return temp;
-      })
-      .then((temp) => {
-        setinvestment(temp);
-      })
-      .catch((err) => {
-        console.log(err);
-        toast.error("Something went wrong");
-      });
-  };
-  //   getdata();
   useEffect(() => {
-    getdata();
-  }, []);
-
-  // const currentdata=(coinobj,id,index)=>{
-  //   const url = `https://api.coingecko.com/api/v3/coins/${id}`;
-
-  //         axios.get(url).then((res) => {
-  //             let dummy=coinobj;
-  //             dummy.imagesmall=res.data.image.small;
-  //             dummy.current_market_price=res.data.market_data.current_price.inr;
-
-  //             console.log(dummy);
-  //             return dummy;
-  //             // setCoin(res.data)
-  //         }).catch((error) => {
-  //             console.log(error)
-  //         })
-
-  // }
-
-  useEffect(() => {
-    if (!localStorage.getItem("token")) {
-    }
-    console.log(localStorage.getItem("token"));
-    const name = window.localStorage.getItem("first_name");
-    console.log(name);
-    setName(name);
+    const storedName = window.localStorage.getItem("first_name");
+    setName(storedName);
   }, []);
 
   return (
@@ -302,34 +146,10 @@ const Dashboard = () => {
         <Navbar />
       </div>
 
-      {/* <!-------------  END OF ASIDE  ----------> */}
       <main>
         <h1>DashBoard</h1>
 
         <div className="insights">
-          {/* 
-          <div className="sales">
-            <img src={currentcoins[0].imagesmall}></img>
-            <span className="material-icons-sharp">analytics</span>
-
-            <div className="middle">
-              <div className="left">
-                <h3>{currentcoins[0].stockId}</h3>
-                <h1>Rs {currentcoins[0].total_amount}</h1>
-                <h1>Rs {currentcoins[0].current_market_price}</h1>
-              </div>
-              <div className="progress">
-        
-                <img src={currentcoins[0].imagesmall}></img>
-                <div className="number">
-                  <p>81%</p>
-                </div>
-              </div>
-            </div>
-            <small className="text-muted">Last 24 Hours</small>
-          </div>
- */}
-
           <div className="sales">
             <span className="material-icons-sharp">analytics</span>
             <div className="middle">
@@ -348,7 +168,7 @@ const Dashboard = () => {
             </div>
             <small className="text-muted">Last 24 Hours</small>
           </div>
-          {/* <!-- END OF SALES --> */}
+
           <div className="expenses">
             <span className="material-icons-sharp">bar_chart</span>
             <div className="middle">
@@ -362,45 +182,53 @@ const Dashboard = () => {
                 </svg>
                 % investments
                 <div className="number">
-                  <p> {((1000000 - balance) / balance).toFixed(2)}%</p>
-                </div>
-              </div>
-            </div>
-            <small className="text-muted">Last 24 Hours</small>
-          </div>
-          {/* <!-- END OF EXPENSES --> */}
-          <div className="income">
-            <span className="material-icons-sharp">stacked_line_chart</span>
-            <div className="middle">
-              <div className="left">
-                <h3>Current Price</h3>
-                <h1>₹{temp}</h1>
-              </div>
-              {/* <p>
-                 {((temp / (1000000 - balance)) * 100).toFixed(2)}%
-                </p> */}
-              <div className="progress">
-                <svg>
-                  <circle cx="38" cy="38" r="36"></circle>
-                </svg>
-                {(1000000 - balance === 0) ? "% Profits" : ((((temp / (1000000 - balance)) * 100 - 100).toFixed(2) >= 0) ? "% Profits" : "%Loss")}
-                <div className="number">
                   <p>
-                    {(1000000 - balance === 0) ? "0.00" : ((temp / (1000000 - balance)) * 100 - 100).toFixed(2)}%
+                    {balance > 0
+                      ? ((1000000 - balance) / balance).toFixed(2)
+                      : "0.00"}
+                    %
                   </p>
                 </div>
               </div>
             </div>
             <small className="text-muted">Last 24 Hours</small>
           </div>
-          {/* <!-- END OF INCOME --> */}
-        </div>
-        {/* <!----------- Data Stats-------------> */}
-        <h2>Recent Coins</h2>
-        <RenderingArrayOfObjects />
-        {/* <RenderingArrayOfObjects /> */}
 
-        {/* <!----------- END OF INSIGHTS -------------> */}
+          <div className="income">
+            <span className="material-icons-sharp">stacked_line_chart</span>
+            <div className="middle">
+              <div className="left">
+                <h3>Current Price</h3>
+                <h1>₹{Math.round(investment)}</h1>
+              </div>
+              <div className="progress">
+                <svg>
+                  <circle cx="38" cy="38" r="36"></circle>
+                </svg>
+                {1000000 - balance === 0
+                  ? "% Profits"
+                  : (investment / (1000000 - balance)) * 100 - 100 >= 0
+                    ? "% Profits"
+                    : "% Loss"}
+                <div className="number">
+                  <p>
+                    {1000000 - balance === 0
+                      ? "0.00"
+                      : (
+                        (investment / (1000000 - balance)) * 100 -
+                        100
+                      ).toFixed(2)}
+                    %
+                  </p>
+                </div>
+              </div>
+            </div>
+            <small className="text-muted">Last 24 Hours</small>
+          </div>
+        </div>
+
+        <h2>Recent Coins</h2>
+        {loading ? <p>Loading...</p> : <RenderingArrayOfObjects coins={coins} />}
 
         <div className="orders">
           <h2>Recent Orders</h2>
@@ -413,57 +241,11 @@ const Dashboard = () => {
                 <th>Status</th>
               </tr>
             </thead>
-            <RenderingArrayOfLists />
-            {/* <tbody>
-              <tr>
-                <td>Foldable Mini Drone</td>
-                <td>81641</td>
-                <td>Due</td>
-                <td className="war">Pending</td>
-                <td className="primary">Details</td>
-              </tr>
-            </tbody>
-            <tbody>
-              <tr>
-                <td>Foldable Mini Drone</td>
-                <td>69001</td>
-                <td>Due</td>
-                <td className="war">Pending</td>
-                <td className="primary">Details</td>
-              </tr>
-            </tbody>
-            <tbody>
-              <tr>
-                <td>Foldable Mini Drone</td>
-                <td>12346</td>
-                <td>Due</td>
-                <td className="war">Pending</td>
-                <td className="primary">Details</td>
-              </tr>
-            </tbody>
-            <tbody>
-              <tr>
-                <td>Foldable Mini Drone</td>
-                <td>52921</td>
-                <td>Due</td>
-                <td className="war">Pending</td>
-                <td className="primary">Details</td>
-              </tr>
-            </tbody>
-            <tbody>
-              <tr>
-                <td>Foldable Mini Drone</td>
-                <td>33911</td>
-                <td>Due</td>
-                <td className="war">Pending</td>
-                <td className="primary">Details</td>
-              </tr>
-            </tbody> */}
+            {loading ? null : <RenderingArrayOfLists coins={coins} />}
           </table>
           <a href="#">Show All</a>
         </div>
       </main>
-      {/* <!---------------- END OF MAIN -----------> */}
 
       <div className="right">
         <div className="top">
@@ -471,7 +253,7 @@ const Dashboard = () => {
             <span className="material-icons-sharp">menu</span>
           </button>
           <div className="theme-toggler" onClick={changeColor}>
-            <span className="material-icons-sharp light-btn active" >
+            <span className="material-icons-sharp light-btn active">
               light_mode
             </span>
             <span className="material-icons-sharp dark-btn">dark_mode</span>
@@ -490,7 +272,7 @@ const Dashboard = () => {
             </div>
           </div>
         </div>
-        {/* <!----------- END OF TOP -----------> */}
+
         <div className="recent-updates">
           <h2>Recent Updates</h2>
           <div className="updates">
@@ -501,7 +283,11 @@ const Dashboard = () => {
               <div className="message">
                 <p>
                   <b>
-                    Mike <b>Crypto Faces a Banking Crisis. For Some, It’s a Conspiracy</b>
+                    Mike{" "}
+                    <b>
+                      Crypto Faces a Banking Crisis. For Some, It's a
+                      Conspiracy
+                    </b>
                   </b>
                 </p>
                 <small className="text-muted">2 Minutes Ago</small>
@@ -514,7 +300,11 @@ const Dashboard = () => {
               <div className="message">
                 <p>
                   <b>
-                    Rhea <b>Biden Budget Plan Would Close Crypto Tax Loss Harvesting Loophole </b>
+                    Rhea{" "}
+                    <b>
+                      Biden Budget Plan Would Close Crypto Tax Loss
+                      Harvesting Loophole
+                    </b>
                   </b>
                 </p>
                 <small className="text-muted">3 Minutes Ago</small>
@@ -527,77 +317,24 @@ const Dashboard = () => {
               <div className="message">
                 <p>
                   <b>
-                    Zoya <b>More pain for the crypto industry means a chance for startups to pivot</b>
+                    Zoya{" "}
+                    <b>
+                      More pain for the crypto industry means a chance for
+                      startups to pivot
+                    </b>
                   </b>
                 </p>
                 <small className="text-muted">5 Minutes Ago</small>
               </div>
             </div>
           </div>
-          {/* <!----------- END OF RECENT UPDATES -------> */}
-          <div style={{ marginTop: "10px" }} >
+          <div style={{ marginTop: "10px" }}>
             <AChart />
           </div>
-
-          {/* <div className="sales-analytics">
-            <h2>Sales Analytics</h2>
-
-            <div className="item online">
-              <div className="icon">
-                <span className="material-icons-sharp">shopping_cart</span>
-              </div>
-              <div className="right">
-                <div className="info">
-                  <h3>ONLINE ORDERS</h3>
-                  <small className="text-muted">Last 24 Hours</small>
-                </div>
-                <div>
-                  <h5 className="success">55%</h5>
-                  <h3>2432</h3>
-                </div>
-              </div>
-            </div>
-            <div className="item offline">
-              <div className="icon">
-                <span className="material-icons-sharp">local_mall</span>
-              </div>
-              <div className="right">
-                <div className="info">
-                  <h3>OFFLINE ORDERS</h3>
-                  <small className="text-muted">Last 24 Hours</small>
-                </div>
-                <div>
-                  <h5 className="danger">-15%</h5>
-                  <h3>781</h3>
-                </div>
-              </div>
-            </div>
-            <div className="item customers">
-              <div className="icon">
-                <span className="material-icons-sharp">person</span>
-              </div>
-              <div className="right">
-                <div className="info">
-                  <h3>NEW CUSTOMERS</h3>
-                  <small className="text-muted">Last 24 Hours</small>
-                </div>
-                <div>
-                  <h5 className="success">+25%</h5>
-                  <h3>1822</h3>
-                </div>
-              </div>
-            </div>
-
-            <div className="item" id="add_product">
-              <div>
-                <span className="material-icons-sharp">add</span>
-                <h3>Add Product</h3>
-              </div>
-            </div> */}
-          {/* </div> */}
         </div>
       </div>
     </div>
   );
 };
+
 export default Dashboard;
