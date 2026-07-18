@@ -4,11 +4,7 @@ import React, { useEffect } from 'react';
 
 import Aboutrem from '../aboutus/about-rem';
 import Footer from './footer';
-import phone1 from './images/phone.png'
-import Shopify from './images/Shopify-Logo.svg'
 
-import PayPal from './images/PayPal-Logo.png'
-import Oracle from './images/oracle.png'
 
 import AOS from 'aos';
 import 'aos/dist/aos.css';
@@ -35,10 +31,10 @@ const LandingPage = () => {
             data-aos-easing="ease-in-out"
           >
             <h1 className="mb-5 sm:text-6xl text-5xl items-center Avenir xl:w-2/2 text-gray-900">
-              The World's Fastest Growing Crypto Web App
+              Your Gateway to the Decentralized Future
             </h1>
             <p className="mb-4 xl:w-3/4 text-gray-600 text-lg">
-              Buy and sell 200+ cryptocurrencies with 20+ flat currencies using bank transfers or your credit/debit card.
+              Track, trade, and manage your crypto portfolio with real-time market data, advanced charting, and uncompromising security. Join the next generation of investors.
             </p>
             <div className="flex justify-center">
               <a
@@ -75,19 +71,16 @@ const LandingPage = () => {
             <div className="flex flex-col w-full mb-4 text-left lg:text-center">
             </div>
             <div className="grid grid-cols-2 gap-16 mb-16 text-center lg:grid-cols-4">
-              <div className="flex items-center justify-center"
+              <div className="flex flex-col items-center justify-center"
                 data-aos="fade-up"
 
 
                 data-aos-duration="1000"
               >
-                <img
-                  src={phone1}
-                  alt="Google Logo"
-                  className="block object-contain h-16 greyC"
-                ></img>
+                <span className="text-4xl mb-2">⚡</span>
+                <h3 className="text-xl font-bold text-gray-800">Real-Time Data</h3>
               </div>
-              <div className="flex items-center justify-center"
+              <div className="flex flex-col items-center justify-center"
                 data-aos="fade-up"
 
 
@@ -95,37 +88,28 @@ const LandingPage = () => {
                 data-aos-easing="ease-in-out"
                 data-aos-duration="800"
               >
-                <img
-                  src={Shopify}
-                  alt="Shopify Logo"
-                  className="block object-contain h-16 greyC"
-                ></img>
+                <span className="text-4xl mb-2">🔒</span>
+                <h3 className="text-xl font-bold text-gray-800">Bank-Grade Security</h3>
               </div>
-              <div className="flex items-center justify-center"
+              <div className="flex flex-col items-center justify-center"
                 data-aos="fade-up"
 
 
                 data-aos-delay="50"
                 data-aos-easing="ease-in-out"
                 data-aos-duration="1000">
-                <img
-                  src={Oracle}
-                  alt="Cloudflare Logo"
-                  className="block object-contain h-16 greyC"
-                ></img>
+                <span className="text-4xl mb-2">📊</span>
+                <h3 className="text-xl font-bold text-gray-800">Portfolio Tracking</h3>
               </div>
-              <div className="flex items-center justify-center"
+              <div className="flex flex-col items-center justify-center"
                 data-aos="fade-up"
 
 
                 data-aos-delay="100"
                 data-aos-easing="ease-in-out"
                 data-aos-duration="1500">
-                <img
-                  src={PayPal}
-                  alt="Paypal Logo"
-                  className="block object-contain h-16 greyC"
-                ></img>
+                <span className="text-4xl mb-2">🌐</span>
+                <h3 className="text-xl font-bold text-gray-800">24/7 Global Access</h3>
               </div>
             </div>
           </div>
@@ -137,37 +121,7 @@ const LandingPage = () => {
 
         <Aboutrem />
 
-        <section className="relative">
-          <div className="max-w-6xl mx-auto px-4 sm:px-6 text-center"
-            data-aos="zoom-in"
-            data-aos-offset="100"
-            data-aos-delay="50"
-            data-aos-duration="1000"
-            data-aos-easing="ease-in-out"
-          >
-            <div className="py-24 md:py-36">
-              <h1 className="mb-5 text-6xl Avenir font-semibold text-gray-900">
-                Subscribe to our newsletter
-              </h1>
-              <h1 className="mb-9 text-2xl font-semibold text-gray-600">
-                Enter your email address and get our newsletters straight away.
-              </h1>
-              <input
-                placeholder="jack@example.com"
-                name="email"
-                type="email"
-                autoComplete="email"
-                className="border border-gray-600 w-1/4 pr-2 pl-2 py-3 mt-2 rounded-md text-gray-800 font-semibold hover:border-gray-900"
-              ></input>{" "}
-              <a
-                className="inline-flex items-center px-14 py-3 mt-2 ml-2 font-medium text-white transition duration-500 ease-in-out transform bg-transparent border rounded-lg bg-gray-900"
-                href="/"
-              >
-                <span className="justify-center">Subscribe</span>
-              </a>
-            </div>
-          </div>
-        </section>
+
       </section>
       <Footer />
     </>
