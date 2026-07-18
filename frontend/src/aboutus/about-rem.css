@@ -1,63 +1,79 @@
 .aboutrem{
     margin: 3vh;
-    background-color: white;
+    background-color: transparent;
+    color: #111827;
 }
 .about-content{
     margin:3vh;
     padding: 3vw;
 }
 .carderabout {
-    background-color: #FFFFFF;
+    background-color: #ffffff;
     margin: 50px 50px;
-    /* max-width: 300px; */
     text-align: center;
-    border-radius: 10px;
-    
-    /* box-shadow: 10px 10px 30px #BDBDBD; */
-    display: inline-block;
-    vertical-align: middle;
+    border-radius: 20px;
+    border: 1px solid #e5e7eb;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
     width: 30vw;
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  .card-fixed-height {
+    align-self: stretch;
+  }
+  .carderabout:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.08);
   }
   /* .carderabout img{
     filter: contrast(2.3);
   } */
   .batman-boxabout{
     text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
   }
   .card__imageabout {
-    /* border-radius: 10px 10px 0 0; */
     overflow: hidden;
     display: flex;
     justify-content: center;
-    /* text-align: center; */
-    /* max-height: 200px; */
     width: 30vw;
   }
   .card__copyabout {
     padding: 20px;
   }
   .carderabout p{
-    /* sttextAlign:"center",fontSize:"150%"}}
-     */
      text-align: center;
-     font-size: 150%;
+     font-size: 1.1rem;
+     line-height: 1.6;
+     color: #4b5563;
+     padding: 10px 20px 20px;
   }
   .carderabout h1{
-    /* sttextAlign:"center",fontSize:"150%"}}
-     */
      text-align: center;
-     font-size: 300%;
+     font-size: 1.5rem;
+     font-weight: 700;
+     color: #111827;
+     margin-top: 20px;
   }
   .banner-b1234{
-    /* text-align: center; */
-    background-color: var(--color-primary);
-    border-radius: 10px;
-    padding: 1rem 2rem;
+    background-color: #2563eb;
+    border-radius: 9999px;
+    padding: 1rem 2.5rem;
     color: white;
+    font-weight: 600;
     cursor: pointer;
-    box-shadow: 0rem 2rem 4rem var(--color-light);
+    border: none;
+    transition: all 0.3s ease;
+    box-shadow: 0 10px 20px rgba(37, 99, 235, 0.2);
     margin:20px;
-  
+}
+.banner-b1234:hover {
+    background-color: #1d4ed8;
+    transform: translateY(-2px);
+    box-shadow: 0 15px 25px rgba(37, 99, 235, 0.3);
 }
   @media screen and (max-width: 600px) {
         .card__imageabout{

@@ -28,31 +28,31 @@ const Aboutrem = () => {
 
       </div>
       <div className="batman-boxabout">
-        <div className="carderabout"
+        <div className="carderabout card-fixed-height"
           data-aos="fade-up"
 
 
           data-aos-delay="50"
           data-aos-easing="ease-in-out"
           data-aos-duration="1000">
-          <div className="card__imageabout">
+          <div className="card__imageabout" style={{ paddingTop: '40px' }}>
             <img src={i1} />
           </div>
-          <div className="card__copy">
+          <div className="card__copyabout">
             <h1>Real-Time Market Analytics</h1>
             <p>
               Backed by precise algorithms providing real-time data for every trade. Guarantee your comfort and perfection in making decisions.
             </p>
           </div>
         </div>
-        <div className="carderabout"
+        <div className="carderabout card-fixed-height"
           data-aos="fade-down"
 
 
           data-aos-delay="50"
           data-aos-easing="ease-in-out"
           data-aos-duration="1000">
-          <div className="card__imageabout">
+          <div className="card__imageabout" style={{ paddingTop: '40px' }}>
             <img src={i2} />
           </div>
           <div className="card__copyabout">
@@ -109,7 +109,7 @@ const Aboutrem = () => {
           data-aos-easing="ease-in-out"
           data-aos-duration="800"
         >
-          <div className="card__copy">
+          <div className="card__copyabout">
             <h1>Our Mission</h1>
             <p>
               Empowering users with real-time data, seamless portfolio management, and a trusted environment to grow their digital assets safely.

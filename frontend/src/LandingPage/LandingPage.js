@@ -20,9 +20,7 @@ const LandingPage = () => {
     <>
 
 
-      <section className="text-gray-600 body-font"
-        style={{ background: "#fff" }}
-      >
+      <section className="text-gray-600 body-font bg-slate-100">
         <div className="max-w-7xl mx-auto flex px-5 py-32 md:flex-row flex-col items-center">
           <div className="lg:flex-grow md:w-1/2 md:ml-24 pt-6 flex flex-col md:items-start md:text-left mb-40 items-center text-center"
             data-aos="fade-right"
@@ -30,27 +28,25 @@ const LandingPage = () => {
             data-aos-duration="1000"
             data-aos-easing="ease-in-out"
           >
-            <h1 className="mb-5 sm:text-6xl text-5xl items-center Avenir xl:w-2/2 text-gray-900">
-              Your Gateway to the Decentralized Future
+            <h1 className="mb-5 sm:text-7xl text-5xl font-extrabold tracking-tight items-center Avenir xl:w-2/2 text-gray-900">
+              Your Gateway to the <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600">Decentralized Future</span>
             </h1>
-            <p className="mb-4 xl:w-3/4 text-gray-600 text-lg">
+            <p className="mb-4 xl:w-3/4 text-gray-500 text-xl font-medium leading-relaxed">
               Track, trade, and manage your crypto portfolio with real-time market data, advanced charting, and uncompromising security. Join the next generation of investors.
             </p>
-            <div className="flex justify-center">
+            <div className="flex justify-center gap-4">
               <a
-                className="inline-flex items-center px-5 py-3 mt-5 font-medium text-white hover:bg-slate-600 transition duration-500 ease-in-out transform border rounded-lg bg-gray-900"
+                className="inline-flex items-center px-8 py-4 mt-5 font-semibold text-white transition-all duration-300 ease-in-out bg-blue-600 rounded-full hover:bg-blue-700 hover:shadow-lg hover:-translate-y-1"
                 href="/signup"
               >
                 <span className="justify-center">Sign Up</span>
               </a>
               <a
-                className="inline-flex items-center mx-8 px-5 py-3 mt-5 font-medium text-black hover:bg-slate-300 transition duration-500 ease-in-out transform bg-white border rounded-lg bg-gray-900"
-                style={{ border: "1px solid gray" }}
+                className="inline-flex items-center px-8 py-4 mt-5 font-semibold text-gray-800 transition-all duration-300 ease-in-out bg-white border border-gray-200 rounded-full hover:bg-gray-50 hover:shadow-lg hover:-translate-y-1"
                 href="/login"
               >
-                <span className="justify-center hover:bg-white-700">Login</span>
+                <span className="justify-center">Login</span>
               </a>
-
             </div>
           </div>
           <div className="xl:mr-44 sm:mr-0 sm:mb-28 mb-0 lg:mb-0 mr-4 md:pl-10"
@@ -60,7 +56,7 @@ const LandingPage = () => {
             data-aos-duration="1000"
             data-aos-easing="ease-in-out">
             <img
-              className="w-80  py-[-10%]"
+              className="w-80 mix-blend-multiply py-[-10%]"
               alt="iPhone-12"
               src="/119081-cryptocurrency-lottie-animation.gif"
             ></img>
@@ -78,7 +74,7 @@ const LandingPage = () => {
                 data-aos-duration="1000"
               >
                 <span className="text-4xl mb-2">⚡</span>
-                <h3 className="text-xl font-bold text-gray-800">Real-Time Data</h3>
+                <h3 className="text-xl font-bold text-gray-900">Real-Time Data</h3>
               </div>
               <div className="flex flex-col items-center justify-center"
                 data-aos="fade-up"
@@ -89,7 +85,7 @@ const LandingPage = () => {
                 data-aos-duration="800"
               >
                 <span className="text-4xl mb-2">🔒</span>
-                <h3 className="text-xl font-bold text-gray-800">Bank-Grade Security</h3>
+                <h3 className="text-xl font-bold text-gray-900">Bank-Grade Security</h3>
               </div>
               <div className="flex flex-col items-center justify-center"
                 data-aos="fade-up"
@@ -99,7 +95,7 @@ const LandingPage = () => {
                 data-aos-easing="ease-in-out"
                 data-aos-duration="1000">
                 <span className="text-4xl mb-2">📊</span>
-                <h3 className="text-xl font-bold text-gray-800">Portfolio Tracking</h3>
+                <h3 className="text-xl font-bold text-gray-900">Portfolio Tracking</h3>
               </div>
               <div className="flex flex-col items-center justify-center"
                 data-aos="fade-up"
@@ -109,7 +105,7 @@ const LandingPage = () => {
                 data-aos-easing="ease-in-out"
                 data-aos-duration="1500">
                 <span className="text-4xl mb-2">🌐</span>
-                <h3 className="text-xl font-bold text-gray-800">24/7 Global Access</h3>
+                <h3 className="text-xl font-bold text-gray-900">24/7 Global Access</h3>
               </div>
             </div>
           </div>
