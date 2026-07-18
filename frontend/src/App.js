@@ -7,7 +7,7 @@ import Signup from "./SignIn/signup";
 import CoinBuy from "./routes/Coin_buy";
 import Coins from "./Market/Coins";
 import axios from "axios";
-import Aboutus from "./aboutus/aboutus";
+
 import React, { useState, useEffect } from 'react'
 import CoinSell from "./routes/Coin_sell";
 import { ToastContainer } from "react-toastify";
@@ -68,14 +68,7 @@ function App() {
               </>
             }
           />
-          <Route
-            path="/aboutus"
-            element={
-              <>
-                <Aboutus />
-              </>
-            }
-          />
+
           <Route
             path="/dashboard/sell/:coinId"
             element={
