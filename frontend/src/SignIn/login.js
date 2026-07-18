@@ -93,7 +93,7 @@ const Login = () => {
       <div className="form-container w-[50%] flex flex-col justify-center">
         <div className="form-body w-[80%] md:w-[80%] lg:w-[60%] md:m-auto m-[5%]">
           <div className="form-header">
-            <h1 className="text-5xl p-5 font-bold text-white">Sign In</h1>
+            <h1 className="text-5xl p-5 font-bold text-white">Login </h1>
           </div>
           <form
             action="https://crytotrade-app.onrender.com/api/auth/login"

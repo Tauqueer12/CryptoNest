@@ -52,7 +52,7 @@ const LandingPage = () => {
                 style={{ border: "1px solid gray" }}
                 href="/login"
               >
-                <span className="justify-center hover:bg-white-700">Sign In</span>
+                <span className="justify-center hover:bg-white-700">Login</span>
               </a>
 
             </div>
