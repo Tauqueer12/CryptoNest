@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { useEffect } from 'react';
 
 
 import Aboutrem from '../aboutus/about-rem';
@@ -12,9 +12,14 @@ import Oracle from './images/oracle.png'
 
 import AOS from 'aos';
 import 'aos/dist/aos.css';
-AOS.init();
-
 const LandingPage = () => {
+  useEffect(() => {
+    AOS.init({
+      once: true,
+      mirror: false,
+      offset: 50
+    });
+  }, []);
   return (
     <>
 
@@ -25,11 +30,8 @@ const LandingPage = () => {
         <div className="max-w-7xl mx-auto flex px-5 py-32 md:flex-row flex-col items-center">
           <div className="lg:flex-grow md:w-1/2 md:ml-24 pt-6 flex flex-col md:items-start md:text-left mb-40 items-center text-center"
             data-aos="fade-right"
-            data-aos-offset="-100"
             data-aos-delay="50"
-            data-aos-once="false"
             data-aos-duration="1000"
-            data-aos-mirror="true"
             data-aos-easing="ease-in-out"
           >
             <h1 className="mb-5 sm:text-6xl text-5xl items-center Avenir xl:w-2/2 text-gray-900">
@@ -76,7 +78,7 @@ const LandingPage = () => {
               <div className="flex items-center justify-center"
                 data-aos="fade-up"
 
-                data-aos-anchor-placement="top-center"
+
                 data-aos-duration="1000"
               >
                 <img
@@ -87,7 +89,7 @@ const LandingPage = () => {
               </div>
               <div className="flex items-center justify-center"
                 data-aos="fade-up"
-                data-aos-anchor-placement="top-center"
+
 
                 data-aos-delay="50"
                 data-aos-easing="ease-in-out"
@@ -101,7 +103,7 @@ const LandingPage = () => {
               </div>
               <div className="flex items-center justify-center"
                 data-aos="fade-up"
-                data-aos-anchor-placement="top-center"
+
 
                 data-aos-delay="50"
                 data-aos-easing="ease-in-out"
@@ -114,7 +116,7 @@ const LandingPage = () => {
               </div>
               <div className="flex items-center justify-center"
                 data-aos="fade-up"
-                data-aos-anchor-placement="top-center"
+
 
                 data-aos-delay="100"
                 data-aos-easing="ease-in-out"

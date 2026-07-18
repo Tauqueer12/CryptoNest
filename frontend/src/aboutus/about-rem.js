@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import './about-rem.css';
 import i1 from "./i1.png"
 import im1 from "./im1.png"
@@ -6,14 +6,19 @@ import i2 from "./i2.png"
 import im2 from "./im2.png"
 import AOS from 'aos';
 import 'aos/dist/aos.css';
-AOS.init();
-
 const Aboutrem = () => {
+  useEffect(() => {
+    AOS.init({
+      once: true,
+      mirror: false,
+      offset: 50
+    });
+  }, []);
   return (
     <div className='aboutrem'>
       <div className='about-content'
         data-aos="zoom-out"
-        data-aos-anchor-placement="top-center"
+
 
         data-aos-delay="50"
         data-aos-easing="ease-in-out"
@@ -25,8 +30,8 @@ const Aboutrem = () => {
       <div className="batman-boxabout">
         <div className="carderabout"
           data-aos="fade-up"
-          data-aos-anchor-placement="top-center"
-  
+
+
           data-aos-delay="50"
           data-aos-easing="ease-in-out"
           data-aos-duration="1000">
@@ -41,8 +46,8 @@ const Aboutrem = () => {
         </div>
         <div className="carderabout"
           data-aos="fade-down"
-          data-aos-anchor-placement="top-center"
-  
+
+
           data-aos-delay="50"
           data-aos-easing="ease-in-out"
           data-aos-duration="1000">
@@ -64,8 +69,8 @@ const Aboutrem = () => {
       <div className="batman-boxabout">
         <div className="carderabout"
           data-aos="flip-left"
-          data-aos-anchor-placement="top-center"
-  
+
+
           data-aos-delay="50"
           data-aos-easing="ease-in"
           data-aos-duration="600">
@@ -77,8 +82,8 @@ const Aboutrem = () => {
         >
           <div className="card__copyabout"
             data-aos="fade-up"
-            data-aos-anchor-placement="top-center"
-    
+
+
             data-aos-delay="50"
             data-aos-easing="ease-in-out"
             data-aos-duration="800"
@@ -95,8 +100,8 @@ const Aboutrem = () => {
       <div className="batman-boxabout">
         <div className="carderabout"
           data-aos="fade-down"
-          data-aos-anchor-placement="top-center"
-  
+
+
           data-aos-delay="50"
           data-aos-easing="ease-in-out"
           data-aos-duration="800"
@@ -109,8 +114,8 @@ const Aboutrem = () => {
         </div>
         <div className="carderabout"
           data-aos="flip-right"
-          data-aos-anchor-placement="top-center"
-  
+
+
           data-aos-delay="50"
           data-aos-easing="ease-in"
           data-aos-duration="600">
@@ -120,12 +125,12 @@ const Aboutrem = () => {
         </div>
       </div>
       <div style={{ textAlign: 'center' }}
-      data-aos="fade"
-          data-aos-anchor-placement="top-center"
-  
-          data-aos-delay="50"
-          data-aos-easing="ease-in-out"
-          data-aos-duration="800">
+        data-aos="fade"
+
+
+        data-aos-delay="50"
+        data-aos-easing="ease-in-out"
+        data-aos-duration="800">
         <h1 style={{ textAlign: "center", fontSize: "3vw" }}>All of this and much more dedicated from <strong style={{ color: " #7380ec" }}>HackElites</strong> to your success</h1>
         <button className="banner-b1234">Trade with us</button>
       </div>
