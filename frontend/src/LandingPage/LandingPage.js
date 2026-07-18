@@ -56,8 +56,8 @@ const LandingPage = () => {
             data-aos-duration="1000"
             data-aos-easing="ease-in-out">
             <img
-              className="w-80 mix-blend-multiply py-[-10%]"
-              alt="iPhone-12"
+              className="w-96 mix-blend-multiply rounded-3xl -mt-52 ml-12 drop-shadow-md"
+              alt="Crypto Animation"
               src="/119081-cryptocurrency-lottie-animation.gif"
             ></img>
           </div>
