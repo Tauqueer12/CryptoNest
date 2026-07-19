@@ -14,11 +14,11 @@ function Single(props) {
             </div>
             <div className="flex-grow justify-between flex flex-row ml-4">
               <span class="text-amount text-sm">Buy price</span>
-              <span className="text-gray-900 text-md">
+              <span className="coin-price-value">
                 Rs {Math.round(props.total_amount)}
               </span>
               <span class="text-amount text-sm">Current price</span>
-              <span className="text-gray-900 text-md">
+              <span className="coin-price-value">
                 Rs {Math.round(props.current_cost)}
               </span>
               <div className="flex items-center justify-between">
@@ -58,11 +58,11 @@ function Single(props) {
             </div>
             <div className="flex-grow justify-between flex flex-row ml-4">
               <span class="text-amount text-sm">Buy price</span>
-              <span className="text-gray-900 text-md">
+              <span className="coin-price-value">
                 Rs {Math.round(props.total_amount)}
               </span>
               <span class="text-amount text-sm">Current price</span>
-              <span className="text-gray-900 text-md">
+              <span className="coin-price-value">
                 Rs {Math.round(props.current_cost)}
               </span>
               <div className="flex items-center justify-between">

@@ -519,6 +519,17 @@ main .orders a{
     color: var(--color-dark-variant);
 }
 
+/* Theme-aware table cell classes */
+.td-primary {
+    color: var(--color-dark);
+    font-weight: 500;
+}
+
+.td-success {
+    color: var(--color-success);
+    font-weight: 600;
+}
+
 .dark-theme-variables main table thead tr th {
     color: var(--color-dark);
 }

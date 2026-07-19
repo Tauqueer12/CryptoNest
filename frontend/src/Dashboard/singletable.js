@@ -7,11 +7,10 @@ function Singletable(props) {
 
 
         <tbody style={{width:"100vw"}}>
-              <tr >
-                <td>{props.stockId}</td>
-
-                <td>{Math.round(props.total_amount)}</td>
-                <td className="war" style={{color:"green"}}>Completed</td>
+              <tr>
+                <td className="td-primary">{props.stockId}</td>
+                <td className="td-primary">{Math.round(props.total_amount)}</td>
+                <td className="td-success">Completed</td>
                 <td className="primary">Details</td>
               </tr>
         </tbody>
