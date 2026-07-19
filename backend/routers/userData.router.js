@@ -140,77 +140,74 @@ router.post("/stock/remove", auth, async (req, res, next) => {
       throw error;
     }
 
-    const user = await User.findOne({
-      _id: userId,
-      stocks: { $elemMatch: { stockId: stockId } },
-    });
+    // Floating-point-safe "effectively zero" threshold — far below any real
+    // currency's smallest unit (e.g. Bitcoin's smallest unit is 1e-8), so a
+    // genuine small holding is never mistaken for computational noise.
+    const FLOATING_POINT_EPSILON = 1e-12;
 
-    if (user) {
-      const stock = user.stocks.find((s) => s.stockId === stockId);
-      const projectedQuantity = stock.quantity - quantity;
-      const projectedTotal = stock.total_amount - trade_amount;
-      console.log(projectedQuantity, projectedTotal);
-
-      let updatedUser;
-      if (projectedQuantity > 0 && projectedTotal > 5) {
-        const result = await User.findOneAndUpdate(
-          {
-            _id: userId,
-            stocks: { $elemMatch: { stockId, quantity: { $gte: quantity } } },
-          },
-          {
-            $inc: {
-              "stocks.$.quantity": -quantity,
-              "stocks.$.total_amount": -trade_amount,
-              credits: trade_amount,
+    const result = await User.findOneAndUpdate(
+      {
+        _id: userId,
+        stocks: { $elemMatch: { stockId, quantity: { $gte: quantity } } },
+      },
+      [
+        {
+          $set: {
+            credits: { $add: ["$credits", trade_amount] },
+            stocks: {
+              $map: {
+                input: "$stocks",
+                as: "s",
+                in: {
+                  $cond: [
+                    { $eq: ["$$s.stockId", stockId] },
+                    {
+                      stockId: "$$s.stockId",
+                      quantity: { $subtract: ["$$s.quantity", quantity] },
+                      total_amount: {
+                        $subtract: ["$$s.total_amount", trade_amount],
+                      },
+                    },
+                    "$$s",
+                  ],
+                },
+              },
             },
           },
-          { new: true }
-        );
-
-        if (!result) {
-          const error = new Error("Stock holding changed, please try again");
-          error.statusCode = 409;
-          throw error;
-        }
-        updatedUser = result;
-      } else {
-        const result = await User.findOneAndUpdate(
-          {
-            _id: userId,
-            stocks: { $elemMatch: { stockId, quantity: { $gte: quantity } } },
-          },
-          {
-            $inc: { credits: trade_amount },
-            $pull: { stocks: { stockId } },
-          },
-          { new: true }
-        );
-
-        if (!result) {
-          const error = new Error("Stock holding changed, please try again");
-          error.statusCode = 409;
-          throw error;
-        }
-        updatedUser = result;
-      }
-
-      console.log(updatedUser);
-
-      res.status(200).json({
-        success: true,
-        data: {
-          stocks: updatedUser.stocks,
-          credits: updatedUser.credits,
-          amount_left: projectedTotal,
         },
-      });
-      return;
-    } else {
-      const error = new Error("User or stock not found");
-      error.statusCode = 404;
+        {
+          $set: {
+            stocks: {
+              $filter: {
+                input: "$stocks",
+                as: "s",
+                cond: {
+                  $gte: [{ $abs: "$$s.quantity" }, FLOATING_POINT_EPSILON],
+                },
+              },
+            },
+          },
+        },
+      ],
+      { new: true }
+    );
+
+    if (!result) {
+      const error = new Error("Stock holding changed, please try again");
+      error.statusCode = 409;
       throw error;
     }
+
+    const updatedStock = result.stocks.find((s) => s.stockId === stockId);
+
+    res.status(200).json({
+      success: true,
+      data: {
+        stocks: result.stocks,
+        credits: result.credits,
+        amount_left: updatedStock ? updatedStock.total_amount : 0,
+      },
+    });
   } catch (error) {
     next(error);
   }
