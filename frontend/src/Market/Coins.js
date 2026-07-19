@@ -44,23 +44,10 @@ const Coins = (props) => {
 
             </div>
             <div className="right">
-                <div className="top">
+                <div className="top" style={{ display: 'none' }}>
                     <button id="menu-btn">
                         <span className="material-icons-sharp">menu</span>
                     </button>
-                    <div className="theme-toggler" onClick={changeColor}>
-                        <span className="material-icons-sharp" id="light">light_mode</span>
-                        <span className="material-icons-sharp">dark_mode</span>
-                    </div>
-                    <div className="profile">
-                        <div className="info">
-                            <p>Hey, <b>Athar</b></p>
-                            <small className="text-muted" style={{ margin: "auto" }}>Admin</small>
-                        </div>
-                        <div className="profile-photo">
-                            <img src={profile1} alt="hero" />
-                        </div>
-                    </div>
                 </div>
                 {/* hi */}
                 {/* <!----------- END OF RECENT UPDATES -------> */}

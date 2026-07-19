@@ -20,3 +20,34 @@
         width:85%;
     }
 }
+
+/* ===== DARK MODE ===== */
+.dark-theme-variables .ant-card {
+    background: var(--color-warning);
+    border-color: rgba(255, 255, 255, 0.08);
+    color: var(--color-dark);
+}
+
+.dark-theme-variables .ant-card-head {
+    background: var(--color-warning);
+    border-bottom-color: rgba(255, 255, 255, 0.08);
+    color: var(--color-dark);
+}
+
+.dark-theme-variables .ant-card-meta-title {
+    color: var(--color-dark);
+}
+
+.dark-theme-variables .ant-card-meta-description {
+    color: var(--color-dark-variant);
+}
+
+.dark-theme-variables .ant-btn {
+    background: var(--color-primary);
+    color: #fff;
+    border-color: var(--color-primary);
+}
+
+.dark-theme-variables .news_heading {
+    color: var(--color-dark);
+}

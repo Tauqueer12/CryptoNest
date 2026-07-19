@@ -1,6 +1,4 @@
 import React from 'react'
-// import '../Dashboard/Dashboard.css'
-import logo from '../assets/logo.png'
 import './Navbar.css'
 import Mnavbar from './mnavbar'
 const Navbar = () => {
@@ -11,7 +9,6 @@ const Navbar = () => {
         localStorage.removeItem('first_name');
         window.location.href = '/'
     }
-    
 
   return (
     <>
@@ -20,17 +17,6 @@ const Navbar = () => {
     </div>
     <div className='navbar-container'>
       <aside>
-                <div className="top">
-                    <div className="logo1">
-                        <img src={logo} alt="hero" />
-                        <h2>Crypto<span className="danger">Nest</span></h2>
-                    </div>
-                    <div className="close" id="close-btn">
-                        <span className="material-icons-sharp">close</span>
-                    </div>
-                </div>
-
-
                 <div className="sidebar">
 
                     <a href="/dashboard" >
@@ -44,7 +30,6 @@ const Navbar = () => {
                     <a href="/messages">
                         <span className="material-icons-sharp">mail_outline</span>
                         <h3>News Info</h3>
-                        <span className="message-count">26</span>
                     </a>
 
                     <a onClick={logOut}>

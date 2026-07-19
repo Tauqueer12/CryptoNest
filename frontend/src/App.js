@@ -14,6 +14,8 @@ import { ToastContainer } from "react-toastify";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Messages from "./Messages/Messages";
+import TopNavbar from "./Navbar/TopNavbar";
+
 function App() {
   const [coins, setCoins] = useState([])
 
@@ -35,6 +37,7 @@ function App() {
     <div className="App">
       <ToastContainer />
       <Router>
+        <TopNavbar />
         <Routes>
           <Route
             path="/"

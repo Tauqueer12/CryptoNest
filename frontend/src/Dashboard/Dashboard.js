@@ -248,29 +248,10 @@ const Dashboard = () => {
       </main>
 
       <div className="right">
-        <div className="top">
+        <div className="top" style={{ display: 'none' }}>
           <button id="menu-btn">
             <span className="material-icons-sharp">menu</span>
           </button>
-          <div className="theme-toggler" onClick={changeColor}>
-            <span className="material-icons-sharp light-btn active">
-              light_mode
-            </span>
-            <span className="material-icons-sharp dark-btn">dark_mode</span>
-          </div>
-          <div className="profile">
-            <div className="info">
-              <p>
-                Hey, <b>{name}</b>
-              </p>
-              <small className="text-muted" style={{ margin: "auto" }}>
-                Admin
-              </small>
-            </div>
-            <div className="profile-photo">
-              <img src={profile1} alt="hero" />
-            </div>
-          </div>
         </div>
 
         <div className="recent-updates">

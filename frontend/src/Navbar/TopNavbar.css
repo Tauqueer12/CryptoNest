@@ -1,0 +1,119 @@
+/* ===== TOP NAVBAR ===== */
+.top-navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 2rem;
+  height: 60px;
+  background-color: var(--color-white, #ffffff);
+  border-bottom: 1px solid rgba(132, 139, 200, 0.2);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* ===== LOGO ===== */
+.logo-container .logo-link {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  text-decoration: none;
+  color: var(--color-dark, #363949);
+}
+
+.logo-container img {
+  width: 2rem;
+  height: 2rem;
+}
+
+.logo-container h2 {
+  font-size: 1.4rem;
+  font-weight: 700;
+  margin: 0;
+}
+
+.logo-container .danger {
+  color: #ff7782;
+}
+
+/* ===== RIGHT SIDE ===== */
+.top-right {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+/* ===== THEME TOGGLER ===== */
+.top-navbar .theme-toggler {
+  background: var(--color-light, rgba(132, 139, 200, 0.18));
+  display: flex;
+  align-items: center;
+  height: 1.6rem;
+  width: 4.2rem;
+  cursor: pointer;
+  border-radius: 0.4rem;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.top-navbar .theme-toggler span {
+  font-size: 1.2rem;
+  width: 50%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-dark, #363949);
+  transition: background 200ms ease, color 200ms ease;
+}
+
+.top-navbar .theme-toggler span.active {
+  background: var(--color-primary, #7380ec);
+  color: white;
+}
+
+/* ===== PROFILE ===== */
+.top-navbar .profile {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--color-dark, #363949);
+}
+
+.top-navbar .profile .username-text {
+  font-size: 0.95rem;
+  white-space: nowrap;
+  color: var(--color-dark-variant, #677483);
+}
+
+.top-navbar .profile .username-text b {
+  color: var(--color-dark, #363949);
+}
+
+/* ===== DARK MODE OVERRIDES ===== */
+.dark-theme-variables .top-navbar {
+  background-color: var(--color-warning);
+  border-bottom-color: rgba(255, 255, 255, 0.07);
+}
+
+.dark-theme-variables .logo-container .logo-link {
+  color: var(--color-dark);
+}
+
+.dark-theme-variables .top-navbar .theme-toggler {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.dark-theme-variables .top-navbar .theme-toggler span {
+  color: var(--color-dark);
+}
+
+.dark-theme-variables .top-navbar .profile .username-text {
+  color: var(--color-dark-variant);
+}
+
+.dark-theme-variables .top-navbar .profile .username-text b {
+  color: var(--color-dark);
+}

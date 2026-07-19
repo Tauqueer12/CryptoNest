@@ -505,3 +505,59 @@ main .orders a{
         font-size: 2rem;
     }
 }
+
+/* ===== DARK MODE OVERRIDES ===== */
+
+/* Tables */
+.dark-theme-variables main table,
+.dark-theme-variables .orders table {
+    background: var(--color-warning);
+}
+
+.dark-theme-variables main table tbody td {
+    border-bottom-color: rgba(255, 255, 255, 0.06);
+    color: var(--color-dark-variant);
+}
+
+.dark-theme-variables main table thead tr th {
+    color: var(--color-dark);
+}
+
+/* Insight Cards */
+.dark-theme-variables .insights > div {
+    background: var(--color-warning);
+}
+
+/* Date pill */
+.dark-theme-variables main .date {
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.dark-theme-variables main .date input[type='date'] {
+    color: var(--color-dark);
+}
+
+/* Recent Updates */
+.dark-theme-variables .right .recent-updates .updates {
+    background: var(--color-warning);
+}
+
+/* Sales Analytics items */
+.dark-theme-variables .right .sales-analytics .item {
+    background: var(--color-warning);
+}
+
+.dark-theme-variables .right .sales-analytics #add_product {
+    background-color: transparent;
+    border-color: var(--color-primary);
+}
+
+/* Orders "Show All" link */
+.dark-theme-variables main .orders a {
+    color: var(--color-primary);
+}
+
+/* General link colour in dark */
+.dark-theme-variables a {
+    color: var(--color-dark);
+}

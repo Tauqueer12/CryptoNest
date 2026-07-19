@@ -41,7 +41,7 @@
     border-radius: 8px;
     margin: 2rem 1rem;
     padding: .7rem 1rem;
-    border-bottom: 1px solid #d7d7d7;
+    border-bottom: 1px solid var(--color-info-light, #dce1eb);
 }
 
 .coin-row:hover {
@@ -209,4 +209,21 @@
     .updates{
         width: 100%;
     }
+}
+
+/* ===== DARK MODE ===== */
+.dark-theme-variables .coin-row {
+    border-bottom-color: rgba(255, 255, 255, 0.07);
+}
+
+.dark-theme-variables .coin-row:hover {
+    background: rgba(115, 128, 236, 0.06);
+}
+
+.dark-theme-variables .updates {
+    background: var(--color-warning);
+}
+
+.dark-theme-variables .right .sales-analytics1 .item {
+    background: var(--color-warning);
 }
