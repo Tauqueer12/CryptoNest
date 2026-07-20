@@ -18,12 +18,9 @@ function Messages() {
         "https://gnews.io/api/v4/search?q=crypto&apikey=c7fd4e0ff18f821f40e99a86f732b6ad"
       );
       setNews(response.data.articles);
-      console.log("news_is", response.data.articles)
     };
     loadNews();
   }, []);
-
-  console.log("news", news);
 
   return (
     <div className="container9">

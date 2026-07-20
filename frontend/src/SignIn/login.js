@@ -41,7 +41,6 @@ const Login = () => {
       .then(async (response) => {
         const data = await response.json();
         if (response.ok || data.success) {
-          console.log(data);
           const userData = data.data;
           localStorage.setItem("token", userData.token);
           window.localStorage.setItem("userId", userData.userId);
@@ -54,11 +53,11 @@ const Login = () => {
           }, 2000);
         } else {
           toast.error(data.message || data.error || "Login Failed. Check credentials.");
-          console.log("Login error from server:", data);
+          console.error("Login error from server:", data);
         }
       })
       .catch((err) => {
-        console.log("Fetch error:", err.message);
+        console.error("Fetch error:", err.message);
         toast.error("Network error. Is the server running?");
       });
   };

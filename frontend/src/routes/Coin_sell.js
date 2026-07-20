@@ -10,8 +10,6 @@ import "./Coin.css";
 const CoinSell = () => {
   const params = useParams();
   const location = useLocation();
-  console.log(location.state);
-
   const [coin, setCoin] = useState({});
   const [value, setValue] = useState();
   const [avl, setAvl] = useState(0);
@@ -38,7 +36,7 @@ const CoinSell = () => {
     axios
       .get(url)
       .then((res) => setCoin(res.data))
-      .catch((error) => console.log(error))
+      .catch((error) => console.error(error))
   }, [params.coinId]);
 
   useEffect(() => {
@@ -54,8 +52,6 @@ const CoinSell = () => {
   const handleSell = (e) => {
     e.preventDefault();
 
-    console.log("Going To Sell", value);
-
     if (!value) {
       toast.error("Please Enter Amount");
       return;
@@ -66,7 +62,6 @@ const CoinSell = () => {
     }
 
     const userId = localStorage.getItem("userId");
-    console.log(userId);
 
     fetch("https://cryptonest-api.onrender.com/api/user/stock/remove", {
       method: "POST",
@@ -83,10 +78,8 @@ const CoinSell = () => {
     })
       .then((response) => response.json())
       .then((response) => {
-        console.log(response);
         if (response.success) {
           toast.success("Stock Sold Successfully");
-          console.log(response);
           setAvl(response.data.amount_left);
           setQuantity(quantity - value / coin.market_data?.current_price.inr);
           setTimeout(() => {
@@ -97,7 +90,7 @@ const CoinSell = () => {
         }
       })
       .catch((error) => {
-        console.log(error);
+        console.error(error);
         toast.error("Please try again later");
       });
   }

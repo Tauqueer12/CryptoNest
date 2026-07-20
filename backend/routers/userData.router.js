@@ -38,7 +38,6 @@ router.post("/stock/add", auth, async (req, res, next) => {
     }
 
     userId = String(userId).replace(/['"]+/g, "");
-    console.log(userId);
     trade_amount = parseFloat(trade_amount);
     quantity = parseFloat(quantity);
 
@@ -100,7 +99,6 @@ router.post("/stock/add", auth, async (req, res, next) => {
         );
       }
     }
-    console.log(updatedUser);
     res.status(200).json({
       success: true,
       data: {
@@ -127,7 +125,6 @@ router.post("/stock/remove", auth, async (req, res, next) => {
     userId = String(userId).replace(/['"]+/g, "");
     trade_amount = parseFloat(trade_amount);
     quantity = parseFloat(quantity);
-    console.log(userId);
 
     if (!Number.isFinite(trade_amount) || trade_amount < 10) {
       const error = new Error("trade_amount must be a number and at least 10");

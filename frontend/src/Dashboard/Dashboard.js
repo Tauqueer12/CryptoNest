@@ -68,7 +68,7 @@ function usePortfolio() {
         }
       } catch (err) {
         if (!cancelled) {
-          console.log(err);
+          console.error(err);
           toast.error("Something went wrong");
           setLoading(false);
         }

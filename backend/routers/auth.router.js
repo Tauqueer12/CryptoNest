@@ -46,7 +46,7 @@ router.post("/login", validate(loginSchema), async (req, res, next) => {
       { expiresIn: "1h" }
     );
   } catch (err) {
-    console.log(err);
+    console.error(err);
     const error = new Error("Error! Something went wrong.");
     return next(error);
   }

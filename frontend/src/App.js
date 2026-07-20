@@ -26,10 +26,9 @@ function App() {
       .get(url)
       .then((response) => {
         setCoins(response.data);
-        console.log(response.data);
       })
       .catch((error) => {
-        console.log(error);
+        console.error(error);
       });
   }, []);
 

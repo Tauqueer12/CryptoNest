@@ -15,25 +15,20 @@ const CoinBuy = () => {
   const [value, setValue] = useState();
   useEffect(() => {
     const url = `https://api.coingecko.com/api/v3/coins/${params.coinId}?localization=false&tickers=true&market_data=true&community_data=false&developer_data=false&sparkline=false`
-    axios.get(url).then((res) => {
-      setCoin(res.data)
-      console.log(res.data)
-      setTimeout(() => {
-        setLoading(false);
-      }, 3000);
-    }).catch((error) => {
-      console.log(error)
-    })
+    axios.get(url)
+      .then((res) => {
+        setCoin(res.data)
+        setTimeout(() => {
+          setLoading(false);
+        }, 3000);
+      })
+      .catch((error) => console.error(error))
   }, [params.coinId]);
   const handleBuy = (e) => {
     e.preventDefault();
 
-    console.log("Going To Buy", value);
-    console.log(coin.market_data?.current_price.inr);
-
     if (!value) {
       toast.error("Please Enter Amount");
-      console.log("Please Enter Amount");
       return;
     }
     if (!coin) {
@@ -41,7 +36,6 @@ const CoinBuy = () => {
       return;
     }
     const userId = localStorage.getItem("userId");
-    console.log(userId);
 
     fetch("https://cryptonest-api.onrender.com/api/user/stock/add", {
       method: "POST",
@@ -57,7 +51,6 @@ const CoinBuy = () => {
       })
     }).then((response) => response.json())
       .then((response) => {
-        console.log(response);
         if (response.success) {
           toast.success("Stock Bought Successfully");
           setTimeout(() => {
@@ -68,7 +61,7 @@ const CoinBuy = () => {
         }
       })
       .catch((error) => {
-        console.log(error);
+        console.error(error);
         toast.error("Please try again later");
       });
   };
