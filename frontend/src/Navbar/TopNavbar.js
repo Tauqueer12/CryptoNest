@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import './TopNavbar.css';
 import logo from '../assets/logo.png';
 
@@ -40,10 +41,10 @@ const TopNavbar = () => {
   return (
     <div className="top-navbar">
       <div className="logo-container">
-        <a href="/" className="logo-link">
+        <Link to="/" className="logo-link">
           <img src={logo} alt="CryptoNest Logo" />
           <h2>Crypto<span className="danger">Nest</span></h2>
-        </a>
+        </Link>
       </div>
 
       <div className="top-right">

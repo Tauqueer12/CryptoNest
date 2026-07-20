@@ -1,8 +1,8 @@
-import React from "react";
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import "./mnavbar.css";
 import logo from '../SignIn/logo.png'
 import { BiMenu } from 'react-icons/bi';
-import { Link } from "react-router-dom";
 
 const Mnavbar = () => {
   const logout = () => {
@@ -30,15 +30,9 @@ const Mnavbar = () => {
         <div className="nav-container123">
           <ul className="nav-tabs">
 
-            <Link to="/dashboard">
-              <li className="nav-tab"><a href="/dashboard">DashBoard</a></li>
-            </Link>
-            <Link to="/market">
-              <li className="nav-tab"><a href="/market">Market</a></li>
-            </Link>
-            <Link to="/messages">
-              <li className="nav-tab"><a href="/messages">News-Info</a></li>
-            </Link>
+            <li className="nav-tab"><Link to="/dashboard">DashBoard</Link></li>
+            <li className="nav-tab"><Link to="/market">Market</Link></li>
+            <li className="nav-tab"><Link to="/messages">News-Info</Link></li>
 
 
 

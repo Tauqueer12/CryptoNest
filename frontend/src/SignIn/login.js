@@ -1,6 +1,7 @@
 import "./signup.css";
 
 import React from "react";
+import { Link } from "react-router-dom";
 import { Canvas } from "@react-three/fiber";
 import { OrbitControls } from "@react-three/drei";
 import { useGLTF, Stage, PresentationControls } from "@react-three/drei";
@@ -159,9 +160,9 @@ const Login = () => {
 
           <div style={{ textAlign: "center", color: "white" }}>
             Don't have an account ?{" "}
-            <a href="/signup">
+            <Link to="/signup">
               <strong style={{ color: "#0CB1CA" }}>Sign up here</strong>
-            </a>
+            </Link>
           </div>
         </div>
       </div>

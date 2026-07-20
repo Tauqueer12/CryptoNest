@@ -1,5 +1,5 @@
-
 import React, { useEffect } from 'react';
+import { Link } from 'react-router-dom';
 
 
 import Aboutrem from '../aboutus/about-rem';
@@ -35,18 +35,18 @@ const LandingPage = () => {
               Track, trade, and manage your crypto portfolio with real-time market data, advanced charting, and uncompromising security. Join the next generation of investors.
             </p>
             <div className="flex justify-center gap-4">
-              <a
+              <Link
                 className="inline-flex items-center px-8 py-4 mt-5 font-semibold text-white transition-all duration-300 ease-in-out bg-blue-600 rounded-full hover:bg-blue-700 hover:shadow-lg hover:-translate-y-1"
-                href="/signup"
+                to="/signup"
               >
                 <span className="justify-center">Sign Up</span>
-              </a>
-              <a
+              </Link>
+              <Link
                 className="inline-flex items-center px-8 py-4 mt-5 font-semibold text-gray-800 transition-all duration-300 ease-in-out bg-white border border-gray-200 rounded-full hover:bg-gray-50 hover:shadow-lg hover:-translate-y-1"
-                href="/login"
+                to="/login"
               >
                 <span className="justify-center">Login</span>
-              </a>
+              </Link>
             </div>
           </div>
           <div className="xl:mr-44 sm:mr-0 sm:mb-28 mb-0 lg:mb-0 mr-4 md:pl-10"

@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom';
 import './Navbar.css'
 import Mnavbar from './mnavbar'
 const Navbar = () => {
@@ -19,18 +20,18 @@ const Navbar = () => {
       <aside>
                 <div className="sidebar">
 
-                    <a href="/dashboard" >
+                    <Link to="/dashboard">
                         <span className="material-icons-sharp">person_outline</span>
                         <h3>Dashboard</h3>
-                    </a>
-                    <a href="/market">
+                    </Link>
+                    <Link to="/market">
                         <span className="material-icons-sharp">insights</span>
                         <h3>Market</h3>
-                    </a>
-                    <a href="/messages">
+                    </Link>
+                    <Link to="/messages">
                         <span className="material-icons-sharp">mail_outline</span>
                         <h3>News Info</h3>
-                    </a>
+                    </Link>
 
                     <a onClick={logOut}>
                         <span className="material-icons-sharp">logout</span>

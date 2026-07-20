@@ -1,6 +1,7 @@
 import "./signup.css";
 import logo from "./logo.png";
 import React from "react";
+import { Link } from "react-router-dom";
 import { Canvas } from "@react-three/fiber";
 import { OrbitControls } from "@react-three/drei";
 import { useGLTF, Stage, PresentationControls } from "@react-three/drei";
@@ -209,9 +210,9 @@ const Signup = () => {
           </form>
           <div style={{ textAlign: "center", color: "white" }}>
             Already have an account ?{" "}
-            <a href="/login">
+            <Link to="/login">
               <strong style={{ color: "#0CB1CA" }}>Login here</strong>
-            </a>
+            </Link>
           </div>
         </div>
       </div>

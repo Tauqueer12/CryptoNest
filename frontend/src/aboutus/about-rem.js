@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import './about-rem.css';
 import i1 from "./i1.png"
 import im1 from "./im1.png"
@@ -136,7 +137,7 @@ const Aboutrem = () => {
         data-aos-easing="ease-in-out"
         data-aos-duration="800">
         <h1 style={{ textAlign: "center", fontSize: "3vw" }}>All of this and much more dedicated from <strong style={{ color: " #7380ec" }}>CryptoNest</strong> to your success</h1>
-        <a href="/signup"><button className="banner-b1234">Trade with us</button></a>
+        <Link to="/signup"><button className="banner-b1234">Trade with us</button></Link>
       </div>
     </div>
 
