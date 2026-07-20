@@ -1,5 +1,5 @@
 import "./App.css";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import LandingPage from "./LandingPage/LandingPage";
 import Dashboard from "./Dashboard/Dashboard";
 import Login from "./SignIn/login";
@@ -15,6 +15,11 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Messages from "./Messages/Messages";
 import TopNavbar from "./Navbar/TopNavbar";
+
+const PrivateRoute = ({ children }) => {
+  const token = localStorage.getItem("token");
+  return token ? children : <Navigate to="/login" replace />;
+};
 
 function App() {
   const [coins, setCoins] = useState([])
@@ -38,58 +43,51 @@ function App() {
       <Router>
         <TopNavbar />
         <Routes>
-          <Route
-            path="/"
-            element={
-              <>
-                <LandingPage />
-              </>
-            }
-          />
+          <Route path="/" element={<LandingPage />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<Signup />} />
+
+          {/* Protected Routes */}
           <Route
             path="/dashboard"
             element={
-              <>
+              <PrivateRoute>
                 <Dashboard />
-              </>
+              </PrivateRoute>
             }
           />
-          <Route
-            path="/login"
-            element={
-              <>
-                <Login />
-              </>
-            }
-          />
-          <Route
-            path="/signup"
-            element={
-              <>
-                <Signup />
-              </>
-            }
-          />
-
           <Route
             path="/dashboard/sell/:coinId"
             element={
-              <>
+              <PrivateRoute>
                 <CoinSell />
-              </>
+              </PrivateRoute>
             }
           />
           <Route
             path="/messages"
             element={
-              <>
+              <PrivateRoute>
                 <Messages />
-              </>
+              </PrivateRoute>
             }
           />
-
-          <Route path='/market' element={<Coins coins={coins} />} />
-          <Route path='/coin/:coinId' element={<CoinBuy />} />
+          <Route
+            path="/market"
+            element={
+              <PrivateRoute>
+                <Coins coins={coins} />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/coin/:coinId"
+            element={
+              <PrivateRoute>
+                <CoinBuy />
+              </PrivateRoute>
+            }
+          />
         </Routes>
       </Router>
     </div>
