@@ -4,7 +4,7 @@
 
 A full-stack cryptocurrency trading simulator built with the MERN stack. Track real-time market data, build a virtual portfolio, execute buy/sell trades, and stay updated with the latest crypto news — all within a secure, production-hardened application.
 
-[![Live Demo](https://img.shields.io/badge/Live-Demo-brightgreen?style=for-the-badge)](https://cryptonest-api.onrender.com)
+[![Live Demo](https://img.shields.io/badge/Live-Demo-brightgreen?style=for-the-badge)](https://crypto-nest-ashen.vercel.app/)
 [![React](https://img.shields.io/badge/React-18-61DAFB?style=flat-square&logo=react)](https://reactjs.org/)
 [![Express](https://img.shields.io/badge/Express-4-000000?style=flat-square&logo=express)](https://expressjs.com/)
 [![MongoDB](https://img.shields.io/badge/MongoDB-7-47A248?style=flat-square&logo=mongodb)](https://www.mongodb.com/)
