@@ -36,46 +36,39 @@ const Signup = () => {
         first_name: firstname,
         last_name: lastname,
         email: email,
-    try {
-      const response = await fetch("https://cryptonest-api.onrender.com/api/auth/signup", {
-        method: "POST",
-        body: JSON.stringify({
-          // Add parameters here
-          first_name: firstname,
-          last_name: lastname,
-          email: email,
-          password: password,
-        }),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+        password: password,
+      }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.success) {
+          const userData = data.data;
+          localStorage.setItem("token", userData.token);
+          window.localStorage.setItem("userId", userData.userId);
+          window.localStorage.setItem("email", userData.email);
+          window.localStorage.setItem("first_name", userData.first_name);
+          window.localStorage.setItem("last_name", userData.last_name);
+          toast.success("Signup Successfull");
+          setTimeout(() => {
+            window.location.href = "/dashboard";
+          }, 2000);
+        } else {
+          const errorMessage = data.data && data.data.message ? data.data.message : "Signup Failed";
+          toast.error(errorMessage);
+          console.error(errorMessage);
+        }
 
-      const data = await response.json();
-
-      if (response.ok || data.success) {
-        const userData = data.data;
-        localStorage.setItem("token", userData.token);
-        window.localStorage.setItem("userId", userData.userId);
-        window.localStorage.setItem("email", userData.email);
-        window.localStorage.setItem("first_name", userData.first_name);
-        window.localStorage.setItem("last_name", userData.last_name);
-        toast.success("Signup Successfull");
+      })
+      .catch((err) => {
+        console.error(err.message);
+        toast.error("Network error or server down.");
         setTimeout(() => {
-          window.location.href = "/dashboard";
+          window.location.href = "/signup";
         }, 2000);
-      } else {
-        const errorMessage = data.message || data.error || "Signup Failed. Email may be in use.";
-        console.error(errorMessage);
-        toast.error(errorMessage);
-      }
-    } catch (err) {
-      console.error(err.message);
-      toast.error("Network error. Is the server running?");
-      setTimeout(() => {
-        window.location.href = "/signup";
-      }, 2000);
-    }
+      });
   };
   return (
     <div className="Login_PAGE flex flex-row bg-[#2f2f2f] h-[100%]">

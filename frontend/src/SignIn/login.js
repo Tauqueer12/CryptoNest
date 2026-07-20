@@ -38,9 +38,9 @@ const Login = () => {
         "Content-Type": "application/json",
       },
     })
-      .then(async (response) => {
-        const data = await response.json();
-        if (response.ok || data.success) {
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.success) {
           const userData = data.data;
           localStorage.setItem("token", userData.token);
           window.localStorage.setItem("userId", userData.userId);
