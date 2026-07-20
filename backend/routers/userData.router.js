@@ -7,7 +7,7 @@ dotenv.config();
 const SECRET_KEY = process.env.SECRET_KEY;
 
 //Handling Get request
-router.post("/portfolio", auth, async (req, res, next) => {
+router.get("/portfolio", auth, async (req, res, next) => {
   try {
     const userId = req.user._id;
     const userData = await User.findById(userId);

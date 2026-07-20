@@ -30,12 +30,11 @@ function usePortfolio() {
         const res = await fetch(
           "https://cryptonest-api.onrender.com/api/user/portfolio",
           {
-            method: "POST",
+            method: "GET",
             headers: {
               "Content-Type": "application/json",
               Authorization: "Bearer " + token,
             },
-            body: JSON.stringify({ userId: userId }),
           }
         );
         const json = await res.json();
