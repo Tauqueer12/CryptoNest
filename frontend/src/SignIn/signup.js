@@ -106,11 +106,7 @@ const Signup = () => {
             <h1 className="text-5xl p-5 font-bold text-white">Sign Up</h1>
           </div>
 
-          <form
-            action="https://crytotrade-app.onrender.com/api/auth/signup"
-            method="POST"
-            onSubmit={onSubmitHandler}
-          >
+          <form onSubmit={onSubmitHandler}>
             <div className="form-input">
               <input
                 placeholder="first name"
