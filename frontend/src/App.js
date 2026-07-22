@@ -11,7 +11,7 @@ import CoinSell from "./routes/Coin_sell";
 import { ToastContainer } from "react-toastify";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import Messages from "./Messages/Messages";
+import News from "./News/News";
 import TopNavbar from "./Navbar/TopNavbar";
 
 const PrivateRoute = ({ children }) => {
@@ -50,10 +50,10 @@ function App() {
             }
           />
           <Route
-            path="/messages"
+            path="/news"
             element={
               <PrivateRoute>
-                <Messages />
+                <News />
               </PrivateRoute>
             }
           />

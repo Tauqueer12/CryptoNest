@@ -29,9 +29,9 @@ const Navbar = () => {
                         <span className="material-icons-sharp">insights</span>
                         <h3>Market</h3>
                     </Link>
-                    <Link to="/messages">
+                    <Link to="/news">
                         <span className="material-icons-sharp">mail_outline</span>
-                        <h3>News Info</h3>
+                        <h3>News</h3>
                     </Link>
 
                     <a onClick={logOut}>

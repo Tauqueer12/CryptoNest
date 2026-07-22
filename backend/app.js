@@ -7,6 +7,7 @@ import flash from "connect-flash";
 import bodyParser from 'body-parser';
 import authRouter from "./routers/auth.router.js"
 import userDataRouter from './routers/userData.router.js'
+import newsRouter from './routers/news.router.js'
 import cors from 'cors';
 /////////////////////////////////
 //DOTENV
@@ -46,6 +47,7 @@ app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use('/api/auth',authRouter);
 app.use('/api/user',userDataRouter);
+app.use('/api/news',newsRouter);
 
 
 app.use((err, req, res, next) => {

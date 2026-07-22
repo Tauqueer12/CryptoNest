@@ -33,7 +33,7 @@ const Mnavbar = () => {
 
             <li className="nav-tab"><Link to="/dashboard">DashBoard</Link></li>
             <li className="nav-tab"><Link to="/market">Market</Link></li>
-            <li className="nav-tab"><Link to="/messages">News-Info</Link></li>
+            <li className="nav-tab"><Link to="/news">News</Link></li>
 
 
 
