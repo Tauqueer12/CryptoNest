@@ -31,7 +31,6 @@ const Login = () => {
       method: "POST",
       body: JSON.stringify({
         // Add parameters here
-
         email: email,
         password: password,
       }),

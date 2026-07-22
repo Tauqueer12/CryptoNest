@@ -65,10 +65,6 @@ const Aboutrem = () => {
         </div>
       </div>
 
-
-
-
-
       <div className="batman-boxabout">
         <div className="carderabout"
           data-aos="flip-left"

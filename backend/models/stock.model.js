@@ -1,6 +1,4 @@
 import mongoose from "mongoose";
-
-
 const StockSchema = new mongoose.Schema({
   symbol: { type: String, required: true },
   name: { type: String, required: true },
