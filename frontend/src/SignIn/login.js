@@ -24,7 +24,7 @@ const Login = () => {
   const [email, setemail] = useState("");
   const [password, setpassword] = useState("");
   const [loading, setLoading] = useState(false);
-``
+
   const onSubmitHandler = (e) => {
     e.preventDefault();
     setLoading(true);
