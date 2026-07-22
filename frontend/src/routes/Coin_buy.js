@@ -1,6 +1,6 @@
 
 import axios from "axios";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import React, { useState, useEffect } from "react";
 import DOMPurify from "dompurify";
 import { toast } from "react-toastify";
@@ -9,6 +9,7 @@ import GAChart from "../chart/graph";
 
 
 const CoinBuy = () => {
+  const navigate = useNavigate();
   const params = useParams();
   const [loading, setLoading] = useState(true);
   const [coin, setCoin] = useState({});
@@ -54,7 +55,7 @@ const CoinBuy = () => {
         if (response.success) {
           toast.success("Stock Bought Successfully");
           setTimeout(() => {
-            window.location.href = "/dashboard";
+            navigate("/dashboard");
           }, 2000);
         } else {
           toast.error(response.message || response.data?.message || "Please try again later");

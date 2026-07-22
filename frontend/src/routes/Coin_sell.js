@@ -1,6 +1,6 @@
 
 import axios from "axios";
-import { useParams, useLocation } from "react-router-dom";
+import { useParams, useLocation, useNavigate } from "react-router-dom";
 import React, { useState, useEffect } from "react";
 import DOMPurify from "dompurify";
 import { toast } from "react-toastify";
@@ -8,6 +8,7 @@ import "./Coin.css";
 
 
 const CoinSell = () => {
+  const navigate = useNavigate();
   const params = useParams();
   const location = useLocation();
   const [coin, setCoin] = useState({});
@@ -19,7 +20,7 @@ const CoinSell = () => {
   useEffect(() => {
     if (!location.state?.quantity) {
       toast.error("No holding data found");
-      window.location.href = "/dashboard";
+      navigate("/dashboard");
       return;
     }
     setQuantity(location.state.quantity);
@@ -83,7 +84,7 @@ const CoinSell = () => {
           setAvl(response.data.amount_left);
           setQuantity(quantity - value / coin.market_data?.current_price.inr);
           setTimeout(() => {
-            window.location.href = "/dashboard";
+            navigate("/dashboard");
           }, 2000);
         } else {
           toast.error("Please try again later");

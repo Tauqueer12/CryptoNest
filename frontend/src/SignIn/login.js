@@ -1,7 +1,7 @@
 import "./signup.css";
 
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Canvas } from "@react-three/fiber";
 import { OrbitControls } from "@react-three/drei";
 import { useGLTF, Stage, PresentationControls } from "@react-three/drei";
@@ -20,6 +20,7 @@ function Model(props) {
   return <primitive object={scene} {...props} />;
 }
 const Login = () => {
+  const navigate = useNavigate();
   const [email, setemail] = useState("");
   const [password, setpassword] = useState("");
 
@@ -49,7 +50,7 @@ const Login = () => {
           localStorage.setItem("last_name", userData.last_name);
           toast.success("Login Successful");
           setTimeout(() => {
-            window.location.href = "/dashboard";
+            navigate("/dashboard");
           }, 2000);
         } else {
           toast.error(data.message || data.error || "Login Failed. Check credentials.");

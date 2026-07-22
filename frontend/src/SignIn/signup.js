@@ -1,7 +1,7 @@
 import "./signup.css";
 import logo from "./logo.png";
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Canvas } from "@react-three/fiber";
 import { OrbitControls } from "@react-three/drei";
 import { useGLTF, Stage, PresentationControls } from "@react-three/drei";
@@ -22,6 +22,7 @@ function Model(props) {
   return <primitive object={scene} {...props} />;
 }
 const Signup = () => {
+  const navigate = useNavigate();
   const [firstname, setfirstname] = useState("");
   const [lastname, setlastname] = useState("");
   const [email, setemail] = useState("");
@@ -54,7 +55,7 @@ const Signup = () => {
           localStorage.setItem("last_name", userData.last_name);
           toast.success("Signup Successfull");
           setTimeout(() => {
-            window.location.href = "/dashboard";
+            navigate("/dashboard");
           }, 2000);
         } else {
           const errorMessage = data.data && data.data.message ? data.data.message : "Signup Failed";
@@ -66,9 +67,6 @@ const Signup = () => {
       .catch((err) => {
         console.error(err.message);
         toast.error("Network error or server down.");
-        setTimeout(() => {
-          window.location.href = "/signup";
-        }, 2000);
       });
   };
   return (

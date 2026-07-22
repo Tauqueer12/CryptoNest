@@ -1,16 +1,17 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import "./mnavbar.css";
 import logo from '../SignIn/logo.png'
 import { BiMenu } from 'react-icons/bi';
 
 const Mnavbar = () => {
+  const navigate = useNavigate();
   const logout = () => {
     localStorage.removeItem('token');
     localStorage.removeItem('userId');
     localStorage.removeItem('email');
     localStorage.removeItem('first_name');
-    window.location.href = '/'
+    navigate('/');
   }
   return (
     <>

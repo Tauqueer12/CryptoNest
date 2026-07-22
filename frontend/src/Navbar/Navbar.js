@@ -1,14 +1,15 @@
 import React from 'react'
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import './Navbar.css'
 import Mnavbar from './mnavbar'
 const Navbar = () => {
+    const navigate = useNavigate();
     const logOut = () => {
         localStorage.removeItem('token');
         localStorage.removeItem('userId');
         localStorage.removeItem('email');
         localStorage.removeItem('first_name');
-        window.location.href = '/'
+        navigate('/');
     }
 
   return (
