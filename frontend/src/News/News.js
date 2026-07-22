@@ -38,7 +38,7 @@ function News() {
               key={index}
               hoverable
               className="card_news"
-              cover={<img alt="image" src={item.image} />}
+              cover={<img alt={item.title || "News article thumbnail"} src={item.image} />}
             >
               <Meta title={item.title} description={item.description} />
               <a href={item.url} target="_blank" rel="noopener noreferrer">

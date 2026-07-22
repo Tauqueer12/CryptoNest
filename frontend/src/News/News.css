@@ -1,10 +1,8 @@
 
-.Messages{
+.News{
     text-align: center;
-    /* margin-left: 200px; */
     display: flex;
     flex-direction: column;
-    /* justify-content: center; */
     align-items: center;
 }
 .card_news{
