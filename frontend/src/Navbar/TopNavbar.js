@@ -8,10 +8,10 @@ const TopNavbar = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   useEffect(() => {
-    const token = window.localStorage.getItem("token");
+    const token = localStorage.getItem("token");
     if (token) {
       setIsLoggedIn(true);
-      const storedName = window.localStorage.getItem("first_name");
+      const storedName = localStorage.getItem("first_name");
       if (storedName) {
         setName(storedName.replace(/['"]+/g, ""));
       }

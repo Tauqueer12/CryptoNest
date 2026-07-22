@@ -135,7 +135,7 @@ const Dashboard = () => {
   }
 
   useEffect(() => {
-    const storedName = window.localStorage.getItem("first_name");
+    const storedName = localStorage.getItem("first_name");
     setName(storedName);
   }, []);
 

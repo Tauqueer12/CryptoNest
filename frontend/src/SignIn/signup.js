@@ -48,10 +48,10 @@ const Signup = () => {
         if (data.success) {
           const userData = data.data;
           localStorage.setItem("token", userData.token);
-          window.localStorage.setItem("userId", userData.userId);
-          window.localStorage.setItem("email", userData.email);
-          window.localStorage.setItem("first_name", userData.first_name);
-          window.localStorage.setItem("last_name", userData.last_name);
+          localStorage.setItem("userId", userData.userId);
+          localStorage.setItem("email", userData.email);
+          localStorage.setItem("first_name", userData.first_name);
+          localStorage.setItem("last_name", userData.last_name);
           toast.success("Signup Successfull");
           setTimeout(() => {
             window.location.href = "/dashboard";
