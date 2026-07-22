@@ -19,11 +19,9 @@ const Coins = (props) => {
                 <Navbar />
             </div>
             <div>
-                <Link to='/'>
-                    <div className='coin-search'>
-                        <h1><i class="fa-solid fa-coins purple"></i> Top <span className='purple'>Coins</span></h1>
-                    </div>
-                </Link>
+                <div className='coin-search'>
+                    <h1><i class="fa-solid fa-coins purple"></i> Top <span className='purple'>Coins</span></h1>
+                </div>
                 <div className='heading'>
                     <p>#</p>
                     <p className='coin-name'>Coin</p>
@@ -35,7 +33,7 @@ const Coins = (props) => {
 
                 {props.coins.map(coins => {
                     return (
-                        <Link to={`/coin/${coins.id}`} element={<CoinBuy />} key={coins.id}>
+                        <Link to={`/coin/${coins.id}`} key={coins.id}>
                             <CoinItem coins={coins} />
                         </Link>
 
