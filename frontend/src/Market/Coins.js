@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import CoinItem from './CoinItem'
 import CoinBuy from '../routes/Coin_buy'
 import { Link } from 'react-router-dom'
@@ -6,13 +6,28 @@ import Navbar from '../Navbar/Navbar'
 import './Coins.css'
 import profile1 from '../assets/profile-1.jpg'
 import AChart from '../chart/chart'
+import axios from 'axios'
 
 
-const Coins = (props) => {
-    // change theme
-    function changeColor() {
-        document.body.classList.toggle("dark-theme-variables");
-    }
+const Coins = () => {
+    const [coins, setCoins] = useState([]);
+    const [loading, setLoading] = useState(true);
+
+    const url = 'https://api.coingecko.com/api/v3/coins/markets?vs_currency=inr'
+
+    useEffect(() => {
+        axios
+            .get(url)
+            .then((response) => {
+                setCoins(response.data);
+                setLoading(false);
+            })
+            .catch((error) => {
+                console.error(error);
+                setLoading(false);
+            });
+    }, []);
+
     return (
         <div className='container3'>
             <div className="nav-show">
@@ -31,14 +46,20 @@ const Coins = (props) => {
                     <p className='hide-mobile'>Mkt Cap</p>
                 </div>
 
-                {props.coins.map(coins => {
-                    return (
-                        <Link to={`/coin/${coins.id}`} key={coins.id}>
-                            <CoinItem coins={coins} />
-                        </Link>
+                {loading ? (
+                    <div style={{ textAlign: "center", padding: "2rem", color: "var(--color-primary)" }}>
+                        <h2>Loading Market Data...</h2>
+                    </div>
+                ) : (
+                    coins.map(coins => {
+                        return (
+                            <Link to={`/coin/${coins.id}`} key={coins.id}>
+                                <CoinItem coins={coins} />
+                            </Link>
 
-                    )
-                })}
+                        )
+                    })
+                )}
 
             </div>
             <div className="right">

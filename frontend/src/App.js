@@ -6,9 +6,7 @@ import Login from "./SignIn/login";
 import Signup from "./SignIn/signup";
 import CoinBuy from "./routes/Coin_buy";
 import Coins from "./Market/Coins";
-import axios from "axios";
-
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import CoinSell from "./routes/Coin_sell";
 import { ToastContainer } from "react-toastify";
 import { toast } from "react-toastify";
@@ -22,20 +20,7 @@ const PrivateRoute = ({ children }) => {
 };
 
 function App() {
-  const [coins, setCoins] = useState([])
 
-  const url = 'https://api.coingecko.com/api/v3/coins/markets?vs_currency=inr'
-
-  useEffect(() => {
-    axios
-      .get(url)
-      .then((response) => {
-        setCoins(response.data);
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-  }, []);
 
   return (
     <div className="App">
@@ -76,7 +61,7 @@ function App() {
             path="/market"
             element={
               <PrivateRoute>
-                <Coins coins={coins} />
+                <Coins />
               </PrivateRoute>
             }
           />
