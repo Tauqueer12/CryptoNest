@@ -88,6 +88,7 @@ Portfolio overview with balance tracking, investment analytics, profit/loss calc
 │  GET  /api/user/portfolio  ── Auth middleware            │
 │  POST /api/user/stock/add  ── Auth middleware            │
 │  POST /api/user/stock/remove ── Auth middleware          │
+│  GET  /api/news            ── GNews Proxy                │
 │                                                         │
 │  Middleware: JWT verification, Zod validation            │
 │  Error Handler: Centralized Express error middleware     │
@@ -217,7 +218,8 @@ CryptoNest/
 │   │   └── user.js               # Mongoose User schema
 │   ├── routers/
 │   │   ├── auth.router.js        # Login, Signup, Logout routes
-│   │   └── userData.router.js    # Portfolio, Buy, Sell routes
+│   │   ├── userData.router.js    # Portfolio, Buy, Sell routes
+│   │   └── news.router.js        # GNews API proxy route
 │   └── schema/
 │       └── auth.schema.js        # Zod validation schemas
 │
@@ -228,7 +230,7 @@ CryptoNest/
 │       ├── SignIn/               # Login & Signup with 3D model
 │       ├── Dashboard/            # Portfolio dashboard
 │       ├── Market/               # Coin listings
-│       ├── Messages/             # Crypto news feed
+│       ├── News/                 # Crypto news feed
 │       ├── Navbar/               # Sidebar + TopNavbar + Mobile nav
 │       ├── chart/                # ApexCharts components
 │       ├── routes/               # Coin buy & sell pages
