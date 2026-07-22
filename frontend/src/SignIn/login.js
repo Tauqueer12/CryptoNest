@@ -23,9 +23,11 @@ const Login = () => {
   const navigate = useNavigate();
   const [email, setemail] = useState("");
   const [password, setpassword] = useState("");
-
+  const [loading, setLoading] = useState(false);
+``
   const onSubmitHandler = (e) => {
     e.preventDefault();
+    setLoading(true);
 
 
     fetch("https://cryptonest-api.onrender.com/api/auth/login", {
@@ -55,11 +57,13 @@ const Login = () => {
         } else {
           toast.error(data.message || data.error || "Login Failed. Check credentials.");
           console.error("Login error from server:", data);
+          setLoading(false);
         }
       })
       .catch((err) => {
         console.error("Fetch error:", err.message);
         toast.error("Network error. Is the server running?");
+        setLoading(false);
       });
   };
 
@@ -141,6 +145,7 @@ const Login = () => {
             <div className="form-button">
               <button
                 type="submit"
+                disabled={loading}
                 className="login-button m-5"
                 style={{
                   width: "100%",
@@ -150,10 +155,11 @@ const Login = () => {
                   outline: "none",
                   fontSize: "20px",
                   color: "white",
-                  backgroundColor: "#0CB1CA",
+                  backgroundColor: loading ? "#777" : "#0CB1CA",
+                  cursor: loading ? "not-allowed" : "pointer"
                 }}
               >
-                Login
+                {loading ? "Connecting to server..." : "Login"}
               </button>
             </div>
           </form>
