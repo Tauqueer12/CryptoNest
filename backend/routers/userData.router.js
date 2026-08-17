@@ -162,7 +162,15 @@ router.post("/stock/remove", auth, async (req, res, next) => {
                       stockId: "$$s.stockId",
                       quantity: { $subtract: ["$$s.quantity", quantity] },
                       total_amount: {
-                        $subtract: ["$$s.total_amount", trade_amount],
+                        $subtract: [
+                          "$$s.total_amount",
+                          {
+                            $multiply: [
+                              "$$s.total_amount",
+                              { $divide: [quantity, "$$s.quantity"] },
+                            ],
+                          },
+                        ],
                       },
                     },
                     "$$s",
