@@ -1,17 +1,24 @@
 import React, { useEffect, useState } from "react";
 import "./Dashboard.css";
-
-import profile1 from "../assets/profile-1.jpg";
-import profile2 from "../assets/profile-2.jpg";
-import profile3 from "../assets/profile-3.jpg";
-import profile4 from "../assets/profile-4.jpg";
 import Navbar from "../Navbar/Navbar";
-
 import axios from "axios";
 import Single from "./singlediv";
 import { toast } from "react-toastify";
 import Singletable from "./singletable";
 import AChart from "../chart/chart";
+
+
+function timeAgo(dateString) {
+  if (!dateString) return "";
+  const seconds = Math.floor((Date.now() - new Date(dateString).getTime()) / 1000);
+  if (seconds < 60) return "Just now";
+  const minutes = Math.floor(seconds / 60);
+  if (minutes < 60) return `${minutes} Minute${minutes === 1 ? "" : "s"} Ago`;
+  const hours = Math.floor(minutes / 60);
+  if (hours < 24) return `${hours} Hour${hours === 1 ? "" : "s"} Ago`;
+  const days = Math.floor(hours / 24);
+  return `${days} Day${days === 1 ? "" : "s"} Ago`;
+}
 
 function usePortfolio() {
   const [coins, setCoins] = useState([]);
@@ -122,6 +129,22 @@ function RenderingArrayOfLists({ coins }) {
 const Dashboard = () => {
   const [name, setName] = React.useState("Admin");
   const { coins, balance, loading } = usePortfolio();
+  const [news, setNews] = useState([]);
+  const [newsLoading, setNewsLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchNews = async () => {
+      try {
+        const res = await axios.get("https://cryptonest-api.onrender.com/api/news");
+        setNews(res.data.data || []);
+      } catch (err) {
+        console.error(err);
+      } finally {
+        setNewsLoading(false);
+      }
+    };
+    fetchNews();
+  }, []);
 
   const investment = coins.reduce(
     (sum, c) => sum + (c.quantity || 0) * (c.current_market_price || 0),
@@ -256,57 +279,29 @@ const Dashboard = () => {
         <div className="recent-updates">
           <h2>Recent Updates</h2>
           <div className="updates">
-            <div className="update">
-              <div className="profile-photo">
-                <img src={profile2} alt="hero" />
-              </div>
-              <div className="message">
-                <p>
-                  <b>
-                    Mike{" "}
-                    <b>
-                      Crypto Faces a Banking Crisis. For Some, It's a
-                      Conspiracy
-                    </b>
-                  </b>
-                </p>
-                <small className="text-muted">2 Minutes Ago</small>
-              </div>
-            </div>
-            <div className="update">
-              <div className="profile-photo">
-                <img src={profile3} alt="hero" />
-              </div>
-              <div className="message">
-                <p>
-                  <b>
-                    Rhea{" "}
-                    <b>
-                      Biden Budget Plan Would Close Crypto Tax Loss
-                      Harvesting Loophole
-                    </b>
-                  </b>
-                </p>
-                <small className="text-muted">3 Minutes Ago</small>
-              </div>
-            </div>
-            <div className="update">
-              <div className="profile-photo">
-                <img src={profile4} alt="hero" />
-              </div>
-              <div className="message">
-                <p>
-                  <b>
-                    Zoya{" "}
-                    <b>
-                      More pain for the crypto industry means a chance for
-                      startups to pivot
-                    </b>
-                  </b>
-                </p>
-                <small className="text-muted">5 Minutes Ago</small>
-              </div>
-            </div>
+            {newsLoading ? (
+              <p className="text-muted">Loading news...</p>
+            ) : news.length === 0 ? (
+              <p className="text-muted">No news available right now.</p>
+            ) : (
+              news
+                .filter((item) => item.image)
+                .slice(0, 3)
+                .map((item, index) => (
+                  <a key={index} className="update" href={item.url} target="_blank" rel="noopener noreferrer">
+                    <div className="profile-photo">
+                      <img src={item.image} alt={item.title || "News thumbnail"} />
+                    </div>
+                    <div className="message">
+                      <p><b>{item.title}</b></p>
+                      <small className="text-muted">
+                        {item.source?.name ? `${item.source.name} · ` : ""}
+                        {timeAgo(item.publishedAt)}
+                      </small>
+                    </div>
+                  </a>
+                ))
+            )}
           </div>
           <div style={{ marginTop: "10px" }}>
             <AChart />
