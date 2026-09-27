@@ -6,7 +6,7 @@ const router = express.Router();
 router.get('/', async (req, res, next) => {
   try {
     const apiKey = process.env.GNEWS_API_KEY;
-    const response = await axios.get(`https://gnews.io/api/v4/search?q=crypto&apikey=${apiKey}`);
+    const response = await axios.get(`https://gnews.io/api/v4/search?q=crypto&lang=en&apikey=${apiKey}`);
 
     res.status(200).json({
       success: true,
