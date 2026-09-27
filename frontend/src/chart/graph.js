@@ -1,51 +1,63 @@
 import React from "react";
 import "./chart.css";
 import Chart from "react-apexcharts";
-import axios from "axios";
 import { useEffect, useState } from "react";
 
-const GAChart = (props) => {
+const DAYS = 7;
+
+const GAChart = ({ coinId }) => {
   const [data, setdata] = useState([]);
-  // const [arr,setarr]
-  let arr = [];
-  var day = Number(Math.random() * 10 + 1);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
+
   useEffect(() => {
+    if (!coinId) {
+      setLoading(false);
+      setError(true);
+      return;
+    }
 
+    const fetchPriceHistory = async () => {
+      setLoading(true);
+      setError(false);
+      try {
+        const url = `https://api.coingecko.com/api/v3/coins/${coinId}/market_chart?vs_currency=inr&days=${DAYS}`;
+        const res = await fetch(url);
+        const parsed = await res.json();
 
-    const func = async () => {
-      const url = `https://api.coingecko.com/api/v3/exchanges/binance/volume_chart?days=${Math.ceil(day)}`;
-      const response = await fetch(url);
-      const parseData = await response.json();
-
-      for (let i = 1; i < parseData.length && i < 50; i++) {
-        arr.push(Math.round(parseData[i][1]));
+        const points = (parsed.prices || []).map(([timestamp, price]) => ({
+          x: timestamp,
+          y: Math.round(price * 100) / 100,
+        }));
+        setdata(points);
+      } catch (err) {
+        console.error(err);
+        setError(true);
+      } finally {
+        setLoading(false);
       }
-      setdata(arr);
-
     };
-    func();
-  }, []);
+
+    fetchPriceHistory();
+  }, [coinId]);
+
+  if (loading) return <div className="graph-status">Loading price history...</div>;
+  if (error || data.length === 0) {
+    return <div className="graph-status">Price history unavailable right now.</div>;
+  }
 
   return (
     <div>
-
       <Chart
         type="line"
         width={800}
         height={400}
-        series={[
-          {
-            name: "product",
-            data: data,
-          },
-        ]}
+        series={[{ name: "Price (INR)", data }]}
         options={{
-          title: { text: "Token Allocation" },
-
-          xaxis: {
-            title: { text: "production sell for today (volumes)" },
-
-          },
+          title: { text: `Price History (${DAYS} Days)` },
+          xaxis: { type: "datetime", title: { text: "Date" } },
+          yaxis: { title: { text: "Price (INR)" } },
+          tooltip: { x: { format: "dd MMM, HH:mm" } },
         }}
       />
     </div>

@@ -205,7 +205,7 @@ const CoinBuy = () => {
         </div>
 
         <div className="graph">
-          <GAChart />
+          <GAChart coinId={coin.id} />
         </div>
       </div>
     </div>
