@@ -1,17 +1,17 @@
 import React, { useState, useEffect } from 'react'
 import CoinItem from './CoinItem'
-import CoinBuy from '../routes/Coin_buy'
 import { Link } from 'react-router-dom'
 import Navbar from '../Navbar/Navbar'
 import './Coins.css'
-import profile1 from '../assets/profile-1.jpg'
 import AChart from '../chart/chart'
 import axios from 'axios'
+import usePortfolio from '../hooks/usePortfolio'
 
 
 const Coins = () => {
     const [coins, setCoins] = useState([]);
     const [loading, setLoading] = useState(true);
+    const { coins: holdings, loading: holdingsLoading } = usePortfolio();
 
     const url = 'https://api.coingecko.com/api/v3/coins/markets?vs_currency=inr'
 
@@ -69,7 +69,7 @@ const Coins = () => {
                     </button>
                 </div>
                 <div className="updates">
-                    <AChart />
+                    {holdingsLoading ? null : <AChart coins={holdings} />}
                 </div>
             </div>
         </div>
