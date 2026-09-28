@@ -4,8 +4,8 @@ import Navbar from "../Navbar/Navbar";
 import axios from "axios";
 import Single from "./singlediv";
 import { toast } from "react-toastify";
-import Singletable from "./singletable";
 import AChart from "../chart/chart";
+import { Link } from "react-router-dom";
 
 
 function timeAgo(dateString) {
@@ -90,39 +90,70 @@ function usePortfolio() {
   return { coins, balance, loading };
 }
 
-function RenderingArrayOfObjects({ coins }) {
-  return (
-    <div>
-      {coins.map((element) => (
-        <Single
-          key={element.stockId}
-          stockId={element.stockId}
-          imagesmall={element.imagesmall}
-          total_amount={element.total_amount}
-          quantity={element.quantity}
-          current_market_price={element.current_market_price}
-          current_cost={element.quantity * element.current_market_price}
-        />
-      ))}
-    </div>
-  );
-}
+function HoldingsTable({ coins }) {
+  if (coins.length === 0) {
+    return <p className="text-muted">No holdings yet.</p>;
+  }
 
-function RenderingArrayOfLists({ coins }) {
   return (
-    <>
-      {coins.map((element) => (
-        <Singletable
-          key={element.stockId}
-          stockId={element.stockId}
-          imagesmall={element.imagesmall}
-          total_amount={element.total_amount}
-          quantity={element.quantity}
-          current_market_price={element.current_market_price}
-          current_cost={element.quantity * element.current_market_price}
-        />
-      ))}
-    </>
+    <table>
+      <thead>
+        <tr>
+          <th></th>
+          <th>Coin</th>
+          <th>Invested</th>
+          <th>Current Value</th>
+          <th>P&amp;L</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        {coins.map((c) => {
+          const currentCost = c.quantity * c.current_market_price;
+          const pnl =
+            c.total_amount > 0
+              ? ((currentCost - c.total_amount) / c.total_amount) * 100
+              : 0;
+
+          return (
+            <tr key={c.stockId}>
+              <td>
+                {c.imagesmall && (
+                  <img
+                    src={c.imagesmall}
+                    alt={c.stockId}
+                    width="28"
+                    height="28"
+                    style={{ borderRadius: "50%", display: "block" }}
+                  />
+                )}
+              </td>
+              <td className="td-primary">{c.stockId}</td>
+              <td className="td-primary">₹{Math.round(c.total_amount)}</td>
+              <td className="td-primary">₹{Math.round(currentCost)}</td>
+              <td className={pnl >= 0 ? "td-success" : "td-danger"}>
+                {pnl >= 0 ? "+" : ""}
+                {pnl.toFixed(2)}%
+              </td>
+              <td>
+                <Link
+                  to={"/dashboard/sell/".concat(c.stockId)}
+                  state={{
+                    stockId: c.stockId,
+                    total_amount: c.total_amount,
+                    current_cost: currentCost,
+                    quantity: c.quantity,
+                  }}
+                  className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+                >
+                  Sell
+                </Link>
+              </td>
+            </tr>
+          );
+        })}
+      </tbody>
+    </table>
   );
 }
 
@@ -248,24 +279,9 @@ const Dashboard = () => {
             <small className="text-muted">Last 24 Hours</small>
           </div>
         </div>
-
-        <h2>Recent Coins</h2>
-        {loading ? <p>Loading...</p> : <RenderingArrayOfObjects coins={coins} />}
-
+        <h2>Your Holdings</h2>
         <div className="orders">
-          <h2>Recent Orders</h2>
-          <table>
-            <thead>
-              <tr>
-                <th>Product Name</th>
-                <th>Product Number</th>
-                <th>Payment</th>
-                <th>Status</th>
-              </tr>
-            </thead>
-            {loading ? null : <RenderingArrayOfLists coins={coins} />}
-          </table>
-          <a href="#">Show All</a>
+          {loading ? <p>Loading...</p> : <HoldingsTable coins={coins} />}
         </div>
       </main>
 
